@@ -8,9 +8,8 @@ function signup(req, res) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    //res.render('chatit_login');
-    console.log(__dirname+'/chatit_box.html');
-    res.sendFile(__dirname+'/chatit_box.html');
+    res.render('chatit_login');
+    //res.sendFile(__dirname+'/chatit_box.html');
 })
 
 router.get('/login', function(req, res) {
@@ -37,7 +36,7 @@ router.post('/signup', function(req, res) {
                 error: err
             });
         } else {
-            res.render('chatit_chat');
+            res.render('chatit_login');
         }
     })
 })
