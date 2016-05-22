@@ -1,0 +1,49 @@
+<% include chatit_header.ejs %>
+    <div class="container">
+        <div class="row" style="margin-top:15px;">
+
+            <!-- 聊天区 -->
+            <div class="col-sm-8">
+                <!-- 聊天内容 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-earphone"></span> &nbsp;聊天内容
+                    </div>
+                    <div class="panel-body chat-body">
+                        <div class="msg-list-body">
+                            <div class="clearfix msg-wrap">
+                            <div class="msg-head">
+                            <span class="msg-name label label-primary pull-left">
+                            <span class="glyphicon glyphicon-user"></span>
+                            &nbsp;Sc千寻
+                            </span>
+                            <span class="msg-time label label-default pull-left">
+                            <span class="glyphicon glyphicon-time"></span>
+                            &nbsp;21:34:15
+                            </span>
+                            </div>
+                            <div class="msg-content">Hello World</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 输入框 -->
+                <div class="input-group input-group-lg">
+                    <span class="input-group-btn">
+                <button class="btn btn-default" id="emotion-btn" type="button">
+                    <img src="/img/emotion_smile.png" style="width:24px;height:24px;">
+                </button>
+            </span>
+                    <input type="text" class="form-control" id="input-edit" placeholder="请输入聊天内容">
+                    <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="onClickSendMessage()">
+                    发送
+                    <span class="glyphicon glyphicon-send"></span>
+                    </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /container -->

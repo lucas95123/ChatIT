@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>无聊-一个基于Web的即时通讯系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Loading Bootstrap -->
+    <link href="/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="/css/flat-ui.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="/css/image/favicon.ico">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="demo-headline text-center">
+            <h1 class="demo-logo">
+            <div class="logo"></div>
+            无聊
+            <small>基于WEB的即时通讯系统</small>
+          </h1>
+        </div>
+        <!-- /demo-headline -->
+
+        <div class="login">
+            <div class="login-screen">
+                <div class="login-icon">
+                    <img src="image/icons/png/Chat.png" alt="Welcome to Mail App" />
+                    <h4>注册<small>新 用 户</small></h4>
+                </div>
+
+                <div class="login-form">
+                    <form accept-charset="UTF-8" action="/signup" method="post" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input type="text" class="form-control login-field" name="username" value="" placeholder="用户名"/>
+                                <label class="login-field-icon fui-user" for="login-name"></label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control login-field" name="passwd" value="" placeholder="密码"/>
+                                <label class="login-field-icon fui-lock" for="login-pass"></label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control login-field" name="passwd confirm" value="" placeholder="再次输入密码"/>
+                                <label class="login-field-icon fui-lock" for="login-passconfirm"></label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control login-field" name="email" value="" placeholder="电子邮箱"/>
+                                <label class="login-field-icon fui-mail" for="login-email"></label>
+                            </div>
+                            <input class="btn btn-info btn-lg btn-block" type="submit" value="注册">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/javascripts/vendor/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/javascripts/flat-ui.min.js"></script>
+
+    <script src="/javascripts/application.js"></script>
+</body>
+
+</html>
