@@ -16,6 +16,7 @@ router.get('/login', function(req, res) {
 })
 
 router.post('/login', function(req, res) {
+    console.log(req);
     console.log(req.body.btnpressed);
     accessManager.login(req.body.username, req.body.passwd, function(err) {
         if (err) {
