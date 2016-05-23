@@ -9,7 +9,6 @@ function signup(req, res) {
 /* GET home page. */
 router.get('/', function(req, res) {
     res.render('chatit_login');
-    //res.sendFile(__dirname+'/chatit_box.html');
 })
 
 router.get('/login', function(req, res) {
@@ -24,7 +23,7 @@ router.post('/login', function(req, res) {
                 error: err
             });
         } else {
-            res.render('chatit_chat');
+            res.render('chatit_friends');
         }
     });
 })
@@ -53,8 +52,8 @@ router.get('/chat', function(req, res, next) {
     res.render('chatit_chat');
 })
 
-router.get('/info', function(req, res, next) {
-    res.render('chatit_info');
+router.get('/personalinfo', function(req, res, next) {
+    res.render('chatit_personalinfo');
 })
 
 router.get('/logout', function(req, res, next) {
@@ -63,6 +62,10 @@ router.get('/logout', function(req, res, next) {
 
 router.get('/bootstrap', function(req, res) {
     res.render('buttons');
+})
+
+router.get('/chatorigin', function(req, res) {
+    res.sendFile(__dirname+'/chatit_box.html');
 })
 
 module.exports = router;

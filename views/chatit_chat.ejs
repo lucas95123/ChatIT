@@ -3,47 +3,74 @@
         <div class="row" style="margin-top:15px;">
 
             <!-- 聊天区 -->
-            <div class="col-sm-8">
+            <div class="col-md-12">
                 <!-- 聊天内容 -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="glyphicon glyphicon-earphone"></span> &nbsp;聊天内容
+                        <span class="glyphicon glyphicon-earphone"></span> &nbsp;李文勇
                     </div>
                     <div class="panel-body chat-body">
-                        <div class="msg-list-body">
-                            <div class="clearfix msg-wrap">
-                            <div class="msg-head">
-                            <span class="msg-name label label-primary pull-left">
-                            <span class="glyphicon glyphicon-user"></span>
-                            &nbsp;Sc千寻
-                            </span>
-                            <span class="msg-time label label-default pull-left">
-                            <span class="glyphicon glyphicon-time"></span>
-                            &nbsp;21:34:15
-                            </span>
+                        <ul id="messages" class="content-reply-box mg10">
+                        </ul>
+                        <form action="/chat">
+                            <div class="col-bg-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="m" type="text" class="form-control">
+                                        <span class="input-group-btn"><button class="btn btn-default" type="submit">发送</button></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="msg-content">Hello World</div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-                </div>
-
-                <!-- 输入框 -->
-                <div class="input-group input-group-lg">
-                    <span class="input-group-btn">
-                <button class="btn btn-default" id="emotion-btn" type="button">
-                    <img src="/img/emotion_smile.png" style="width:24px;height:24px;">
-                </button>
-            </span>
-                    <input type="text" class="form-control" id="input-edit" placeholder="请输入聊天内容">
-                    <span class="input-group-btn">
-                <button class="btn btn-default" type="button" onclick="onClickSendMessage()">
-                    发送
-                    <span class="glyphicon glyphicon-send"></span>
-                    </button>
-                    </span>
                 </div>
             </div>
         </div>
     </div>
+    <script src="javascripts/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var socket = io();
+        $('form').submit(function() {
+            $('#messages').append($("<li></li>")
+                .attr("class", "even")
+                .append($("<a></a>")
+                    .attr("class", "user")
+                    .append($("<img></img>")
+                        .attr("class", "img-responsive avatar_")
+                        .attr("src", "image/a.jpg")))
+                .append($("<div></div>")
+                    .attr("class", "reply-content-box")
+                    .append($("<span></span>")
+                        .attr("class", "reply-time")
+                        .text("03-08 15：00"))
+                    .append($("<div></div>")
+                        .attr("class", "reply-content pr")
+                        .append($("<span></span>")
+                            .attr("class", "arrow"))
+                        .text($('#m').val()))));
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+        socket.on('chat message', function(msg) {
+            $('#messages').append($("<li></li>")
+                .attr("class", "odd")
+                .append($("<a></a>")
+                    .attr("class", "user")
+                    .append($("<img></img>")
+                        .attr("class", "img-responsive avatar_")
+                        .attr("src", "image/a.jpg")))
+                .append($("<div></div>")
+                    .attr("class", "reply-content-box")
+                    .append($("<span></span>")
+                        .attr("class", "reply-time")
+                        .text("03-08 15：00"))
+                    .append($("<div></div>")
+                        .attr("class", "reply-content pr")
+                        .append($("<span></span>")
+                            .attr("class", "arrow"))
+                        .text(msg))));
+        });
+    </script>
     <!-- /container -->
