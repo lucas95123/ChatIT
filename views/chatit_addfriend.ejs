@@ -1,0 +1,51 @@
+<% include chatit_header.ejs %>
+    <style>
+        .form-group {
+            margin-bottom: 0px;
+        }
+    </style>
+    <div class="container">
+        <div class="row" style="margin-top:20px;">
+            <!-- 在线列表 -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <form accept-charset="UTF-8" action="/searchfriends" method="post" role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control" id="na-leftarInput-01" name="user_name" type="search" placeholder="请输入好友用户名或Email">
+                                        <span class="input-group-btn"><button type="submit" class="btn"><span class="fui-search"></span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="panel-body list-body" style="min-height:700px;max-height:700px">
+                        <div class="row" style="margin-left:1px;margin-right:1px;">
+                            <div class="span12">
+                                <ul>
+                                    <% for(var i=0;i<user.length;i++){%>
+                                        <li>
+                                            <table cellpadding="4">
+                                                <tr>
+                                                    <td><img src="image/3.png" width="60" class="img-circle" /></td>
+                                                    <td><b>&nbsp;&nbsp;<%-user[i]['user_name']%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                                                    <td>
+                                                        <a href=<%-"'./addfriends?"+"user_id="+user[i]['user_id']+"'"%> ><button class="btn btn-primary btn-sm">添加</button></a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
+                                        </li>
+                                        <%}%>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center" id="list-count">45位联系人</div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -10,69 +10,104 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="demo1">
-                                    <li class="news-item">
+                                    <li>
                                         <table cellpadding="4">
                                             <tr>
                                                 <td><img src="image/1.png" width="60" class="img-circle" /></td>
                                                 <td><b>&nbsp;&nbsp;李文勇</b></td>
                                             </tr>
                                         </table>
+                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
                                     </li>
-                                    <li class="news-item">
+                                    <li>
                                         <table cellpadding="4">
                                             <tr>
                                                 <td><img src="image/2.png" width="60" class="img-circle" /></td>
                                                 <td><b>&nbsp;&nbsp;李文勇</b></td>
                                             </tr>
                                         </table>
+                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
                                     </li>
-                                    <li class="news-item">
+                                    <li>
                                         <table cellpadding="4">
                                             <tr>
                                                 <td><img src="image/3.png" width="60" class="img-circle" /></td>
                                                 <td><b>&nbsp;&nbsp;李文勇</b></td>
                                             </tr>
                                         </table>
+                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
                                     </li>
-                                    <li class="news-item">
+                                    <li>
                                         <table cellpadding="4">
                                             <tr>
                                                 <td><img src="image/4.png" width="60" class="img-circle" /></td>
                                                 <td><b>&nbsp;&nbsp;李文勇</b></td>
                                             </tr>
                                         </table>
+                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
                                     </li>
-                                    <li class="news-item">
+                                    <li>
                                         <table cellpadding="4">
                                             <tr>
                                                 <td><img src="image/5.png" width="60" class="img-circle" /></td>
                                                 <td><b>&nbsp;&nbsp;李文勇</b></td>
                                             </tr>
                                         </table>
+                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
                                     </li>
-                                    <li class="news-item">
+                                    <li>
                                         <table cellpadding="4">
                                             <tr>
                                                 <td><img src="image/6.png" width="60" class="img-circle" /></td>
                                                 <td><b>&nbsp;&nbsp;李文勇</b></td>
                                             </tr>
                                         </table>
+                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
                                     </li>
-                                    <li class="news-item">
+                                    <li>
                                         <table cellpadding="4">
                                             <tr>
                                                 <td><img src="image/7.png" width="60" class="img-circle" /></td>
                                                 <td><b>&nbsp;&nbsp;李文勇</b></td>
                                             </tr>
                                         </table>
+                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-primary btn-wide">清空</button>
+
+                    </div>
                 </div>
             </div>
+            <style>
+                .panel-body {
+                    min-height: 660px;
+                    max-height: 700px;
+                    overflow: auto;
+                    ;
+                }
 
+                .panel-footer {
+                    padding: 1px 12px 1px 12px;
+                }
+
+                .form-group {
+                    margin-bottom: 10px;
+                    margin-top: 10px;
+                }
+
+                .btn-wide {
+                    min-width: 160px;
+                    padding-left: 30px;
+                    padding-right: 30px;
+                    margin-bottom: 10px;
+                    margin-top: 10px;
+                }
+            </style>
 
             <!-- 聊天区 -->
             <div class="col-md-9">
@@ -84,6 +119,9 @@
                     <div class="panel-body chat-body">
                         <ul id="messages" class="content-reply-box mg10">
                         </ul>
+
+                    </div>
+                    <div class="panel-footer">
                         <form action="/chat" autocomplete=off>
                             <div class="col-bg-12">
                                 <div class="form-group">

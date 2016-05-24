@@ -13,7 +13,7 @@ exports.signup = function(username, passwd, emailaddr, callback) {
 }
 
 exports.login = function(username, passwd, callback) {
-  var sql = 'select * from AccountInfo where user_name=';
+  var sql = 'select user_id from AccountInfo where user_name=';
   sql+='\'' + username.trim() + '\'and ';
   sql+='passwd =';
   sql+='\'' + passwd.trim() + '\'';
@@ -24,6 +24,6 @@ exports.login = function(username, passwd, callback) {
     }
     if(vals[0]==undefined)
       qerr='Wrong passwd'
-    callback(qerr);
+    callback(qerr, vals);
   })
 }
