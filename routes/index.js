@@ -29,6 +29,12 @@ var login = function(req, res) {
 /* GET home page. */
 router.get('/', login);
 
+router.post('/testEmbed', function(req, res){
+	console.log("================");
+	console.log(req.body);
+	res.render('chatit_signup');
+}) 
+
 router.get('/login', login)
 
 router.post('/login', function(req, res) {
