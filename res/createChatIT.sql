@@ -14,7 +14,8 @@ create table FriendInfo(
   friend_id int not null,
   tag varchar(50),
   foreign key(user_id) references AccountInfo(user_id),
-  foreign key(friend_id) references AccountInfo(user_id)
+  foreign key(friend_id) references AccountInfo(user_id),
+  primary key(user_id,friend_id)
 ) DEFAULT CHARSET=utf8;
 
 create table OfflineMessage(

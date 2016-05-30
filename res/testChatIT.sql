@@ -21,5 +21,3 @@ insert into FriendInfo values(3, 7, '老同学');
 insert into FriendInfo values(3, 8, '老同学');
 insert into FriendInfo values(3, 9, '老同学');
 insert into FriendInfo values(3, 10, '1070寝室');
-insert into FriendInfo values(3, 2, '1070寝室');
-insert into FriendInfo values(3, 11, '持久型眼泪坦克');

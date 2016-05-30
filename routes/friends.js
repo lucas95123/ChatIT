@@ -36,14 +36,14 @@ var renderFriendPage = function(req, res) {
 
 router.get('/', function(req, res, next) {
     if (req.session.username == undefined || req.session.username == null)
-        res.render('chatit_login');
+        res.redirect("/login");
     else
         renderFriendPage(req, res);
 })
 
 router.get('/searchfriends', function(req, res, next) {
     if (req.session.username == undefined || req.session.username == null)
-        res.render('chatit_login');
+        res.redirect("/login");
     else {
         var vals = [];
         res.render('chatit_addfriend', {
@@ -65,11 +65,27 @@ router.post('/searchfriends', function(req, res, next) {
 
 router.get('/addfriends', function(req, res) {
     if (req.session.username == undefined || req.session.username == null)
-        res.render('chatit_login');
+        res.redirect("/login");
     else {
         friendManager.addFriends(req.session.userid, req.query.user_id, function(err) {
             if (!err) {
-                res.redirect('./searchfriends');
+                res.redirect('/friends');
+            } else {
+                res.render('error', {
+                    error: err
+                });
+            }
+        })
+    }
+})
+
+router.get('/deletefriend', function(req, res) {
+    if (req.session.username == undefined || req.session.username == null)
+        res.redirect("/login");
+    else {
+        friendManager.deleteFriends(req.session.userid, req.query.friend_id, function(err) {
+            if (!err) {
+                res.redirect('/friends');
             } else {
                 res.render('error', {
                     error: err

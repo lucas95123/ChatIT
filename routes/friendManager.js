@@ -43,3 +43,18 @@ exports.searchFriends = function(user_name, callback) {
         }
     })
 }
+
+exports.deleteFriends = function(user_id, friend_id, callback) {
+    sql = 'delete from FriendInfo where user_id=';
+    sql += user_id + ' and friend_id=';
+    sql += friend_id + ';';
+    console.log(sql);
+    searchManager.query(sql, function(qerr, vals) {
+        if (qerr) {
+            callback(qerr);
+            return;
+        } else {
+            callback(qerr, vals);
+        }
+    })
+}
