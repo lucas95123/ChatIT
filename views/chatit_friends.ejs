@@ -13,46 +13,115 @@
                                 <b> &nbsp;我的好友</b>
                             </div>
                             <div class="col-md-4 text-right">
-                                <button class="btn btn-default btn-sm"><a color="white" href="/searchfriends">添加好友</a></button>
+                                <button class="btn btn-default btn-sm"><a color="white" href="friends/searchfriends">添加好友</a></button>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body list-body">
                         <div class="row">
                             <div class="span12">
-                                <div class="accordion" id="accordion-467413">
-                                    <% for(var i=0;i<3;i++) {%>
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent=<%- "#accordion-"+i %> href=<%- "#accordion-element-"+i %> >&nbsp;&nbsp;&nbsp;&nbsp;<%-"1070 "+(i+3)+"位好友"%></a>
-                                            </div>
-                                            <div id=<%- "accordion-element-"+i%> class="accordion-body collapse in">
-                                                <div class="list-group">
-                                                    <%for(var j=0;j<3;j++) {%>
-                                                        <a id="modal-38950" href="#modal-container-38950" class="list-group-item" data-toggle="modal" data-target=<%- "'#friendinfo'" %>>
+                                <div class="accordion" id="accordion-1">
+                                    <%var count=0;%>
+                                        <% for(var i=0;i<friends.length;i++) {%>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <HR>
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent=<%- "#accordion-heading-"+i %> href=<%- "#accordion-element-"+i %> >&nbsp;&nbsp;&nbsp;&nbsp;<%-friends[i][0].tag+" "+friends[i].length+"位好友"%></a>
+                                                </div>
+                                                <div id=<%- "accordion-element-"+i%> class="accordion-body collapse in">
+                                                    <div class="list-group">
+                                                        <%for(var j=0;j<friends[i].length;j++) {%>
+                                                            <%count+=1;%>
+                                                                <a id=<%- "'modal-"+i+ ""+j+ "'"%> href=<%-"'#modal-container-"+i+""+j+"'"%> class="list-group-item" data-toggle="modal" data-target=<%- "'#friendinfo-"+i+ ""+j+ "'"%>>
                                                       <div class="row">
-                                                          <div class="col-md-1">
-                                                              <img src="image/a.jpg" alt="140*140" class="img-rounded">
+                                                          <div class="col-md-1 col-sm-2 col-xs-3">
+                                                              <img src="/image/a.jpg" alt="140*140" class="img-rounded">
                                                           </div>
-                                                          <div class="col-md-10">
-                                                              <h5 class="list-group-item-heading">李文勇</h5>
+                                                          <div class="col-md-10 col-sm-8 col-xs-8">
+                                                              <h5 class="list-group-item-heading"><%- friends[i][j].user_name %></h5>
                                                               <p class="list-group-item-text">好马不吃回头草</p>
                                                           </div>
                                                       </div>
                                                   </a>
-                                                        <%}%>
+                                                                <div class="modal fade" id=<%- "'friendinfo-"+i+ ""+j+ "'"%> tabindex="-1" role="dialog" aria-labelledby=
+                                                                    <%-"'ModalLabel'"%> >
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                                                        &times;
+                                                                                    </button>
+                                                                                    <h4 class="modal-title" id="myModalLabel">好友信息</h4>
+                                                                                </div>
+
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-4">
+                                                                                            <img src="/image/c.jpg" alt="140*140" class="img-rounded">
+                                                                                        </div>
+                                                                                        <div class="col-md-8">
+                                                                                            <h5><%-friends[i][j].user_name%></h5>
+                                                                                            <b>好马不吃回头草</b>
+                                                                                            <br>
+                                                                                            <b>21岁</b>
+                                                                                            <br>
+                                                                                            <a>
+                                                                                                <%friends[i][j].email_addr%>
+                                                                                            </a>
+                                                                                            <br>
+                                                                                            <br>
+                                                                                            <select data-toggle="select" class="form-control select select-info select-sm mrs mbm">
+                                                                                                <option value="0">
+                                                                                                    <%-friends[i][j].tag%>
+                                                                                                </option>
+                                                                                                <%for(var tag=0;tag<friends.length;tag++){%>
+                                                                                                    <%if(friends[tag][0].tag!=friends[i][j].tag){%>
+                                                                                                        <option value=<%- "'"+tag+ "'"%>>
+                                                                                                            <%-friends[tag][0].tag%>
+                                                                                                        </option>
+                                                                                                        <%}%>
+                                                                                                            <%}%>
+                                                                                            </select>
+                                                                                            <br>
+                                                                                            <form class="form-inline" role="form">
+                                                                                                <div class="form-group">
+                                                                                                    <input class="form-control input-sm" type="text" placeholder="新分组">
+                                                                                                </div>
+                                                                                                <button type="submit" class="btn btn-info btn-sm">添加</button>
+                                                                                            </form>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <br>
+                                                                                </div>
+
+                                                                                <div class="modal-footer">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-5">
+                                                                                            <a href=<%- "'chat?friend_id="+friends[i][j].user_id+ "'"%>><button class="btn btn-success btn-wide">发送消息</button></a>
+                                                                                        </div>
+                                                                                        <div class="col-md-5">
+                                                                                            <a href=<%- "'friends/deletefriend?friend_id="+friends[i][j].user_id+ "'"%>><button type="submit" class="btn btn-danger btn-wide">删除好友</button></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                                <%}%>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <%}%>
+                                            <%}%>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer text-center" id="list-count">45位联系人</div>
+                    <div class="panel-footer text-center" id="list-count">
+                        <%- count+"位联系人"%>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- /container -->
-    <% include chatit_friendinfo.ejs %>

@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form accept-charset="UTF-8" action="/searchfriends" method="post" role="form">
+                        <form accept-charset="UTF-8" action="searchfriends" method="post" role="form">
                             <fieldset>
                                 <div class="form-group">
                                     <div class="input-group">
@@ -22,7 +22,7 @@
                             </fieldset>
                         </form>
                     </div>
-                    <div class="panel-body list-body" style="min-height:700px;max-height:700px">
+                    <div class="panel-body list-body" style="min-height:700px;max-height:700px;overflow:scroll">
                         <div class="row" style="margin-left:1px;margin-right:1px;">
                             <div class="span12">
                                 <ul>
@@ -30,21 +30,21 @@
                                         <li>
                                             <table cellpadding="4">
                                                 <tr>
-                                                    <td><img src="image/3.png" width="60" class="img-circle" /></td>
+                                                    <td><img src="/image/3.png" width="60" class="img-circle" /></td>
                                                     <td><b>&nbsp;&nbsp;<%-user[i]['user_name']%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
                                                     <td>
                                                         <a href=<%-"'./addfriends?"+"user_id="+user[i]['user_id']+"'"%> ><button class="btn btn-primary btn-sm">添加</button></a>
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
+                                            <hr>
                                         </li>
                                         <%}%>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer text-center" id="list-count">45位联系人</div>
+                    <div class="panel-footer text-center" id="list-count"><%- user.length+"位联系人"%></div>
                 </div>
             </div>
         </div>
