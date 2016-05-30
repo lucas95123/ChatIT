@@ -118,7 +118,7 @@ router.get('/personalinfo', function(req, res, next) {
     if (req.session.username == undefined || req.session.username == null)
         res.redirect("/login");
     else
-        res.render('chatit_info');
+        res.render('chatit_info',{username:req.session.username});
 })
 
 router.get('/logout', function(req, res, next) {

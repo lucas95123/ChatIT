@@ -70,26 +70,34 @@
                                                                                             </a>
                                                                                             <br>
                                                                                             <br>
-                                                                                            <select data-toggle="select" class="form-control select select-info select-sm mrs mbm">
-                                                                                                <option value="0">
-                                                                                                    <%-friends[i][j].tag%>
-                                                                                                </option>
-                                                                                                <%for(var tag=0;tag<friends.length;tag++){%>
-                                                                                                    <%if(friends[tag][0].tag!=friends[i][j].tag){%>
-                                                                                                        <option value=<%- "'"+tag+ "'"%>>
-                                                                                                            <%-friends[tag][0].tag%>
-                                                                                                        </option>
-                                                                                                        <%}%>
-                                                                                                            <%}%>
-                                                                                            </select>
-                                                                                            <br>
-                                                                                            <form class="form-inline" role="form">
+                                                                                            <form class="form-inline" role="form" method="post" action=<%-"'/friends/changegroup?"+"friend_id="+friends[i][j].friend_id+"'"%>>
                                                                                                 <div class="form-group">
-                                                                                                    <input class="form-control input-sm" type="text" placeholder="新分组">
+                                                                                                    <select name="tag" id=<%- "'selectgroup-"+i+j+ "'"%> data-toggle="select" class="form-control select select-info select-sm mrs mbm">
+                                                                                                        <option>
+                                                                                                            <%-friends[i][j].tag%>
+                                                                                                        </option>
+                                                                                                        <%for(var tag=0;tag<friends.length;tag++){%>
+                                                                                                            <%if(friends[tag][0].tag!=friends[i][j].tag){%>
+                                                                                                                <option>
+                                                                                                                    <%-friends[tag][0].tag%>
+                                                                                                                </option>
+                                                                                                                <%}%>
+                                                                                                                    <%}%>
+                                                                                                    </select>
                                                                                                 </div>
-                                                                                                <button type="submit" class="btn btn-info btn-sm">添加</button>
+                                                                                                <br>
+                                                                                                <div class="form-group">
+                                                                                                    <input id=<%- "'inputgroup-"+i+j+ "'"%> class="form-control input-sm" type="text" placeholder="新分组">
+                                                                                                </div>
+                                                                                                <button id=<%- "'addgroup-"+i+ ""+j+ "'"%> class="btn btn-primary btn-sm">添加</button>
+                                                                                                <button type="submit" class="btn btn-info btn-sm">确认</button>
                                                                                             </form>
-
+                                                                                            <script>
+                                                                                                $(<%-"'#addgroup-"+i+j+"'"%>).click(function() {
+                                                                                                    $(<%-"'#selectgroup-"+i+j+"'"%>).append($("<option></option>").text($(<%-"'#inputgroup-"+i+j+"'"%>).val()));
+                                                                                                    return false;
+                                                                                                });
+                                                                                            </script>
                                                                                         </div>
                                                                                     </div>
                                                                                     <br>

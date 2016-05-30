@@ -95,4 +95,21 @@ router.get('/deletefriend', function(req, res) {
     }
 })
 
+router.post('/changegroup', function(req, res) {
+    console.log(req.body);
+    if (req.session.username == undefined || req.session.username == null)
+        res.redirect("/login");
+    else {
+        friendManager.changeTag(req.session.userid, req.query.friend_id, req.body.tag, function(err) {
+            if (!err) {
+                res.redirect('/friends');
+            } else {
+                res.render('error', {
+                    error: err
+                });
+            }
+        })
+    }
+})
+
 module.exports = router;
