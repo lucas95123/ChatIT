@@ -106,7 +106,7 @@
                                                                                 <div class="modal-footer">
                                                                                     <div class="row">
                                                                                         <div class="col-md-5">
-                                                                                            <a href=<%- "'chat?friend_id="+friends[i][j].user_id+ "'"%>><button class="btn btn-success btn-wide">发送消息</button></a>
+                                                                                            <a href=<%- "'chat?friend_id="+friends[i][j].friend_id+"&friend_name="+friends[i][j].user_name+"'"%>><button class="btn btn-success btn-wide">发送消息</button></a>
                                                                                         </div>
                                                                                         <div class="col-md-5">
                                                                                             <a href=<%- "'friends/deletefriend?friend_id="+friends[i][j].user_id+ "'"%>><button type="submit" class="btn btn-danger btn-wide">删除好友</button></a>
