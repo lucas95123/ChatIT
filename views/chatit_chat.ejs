@@ -1,201 +1,80 @@
 <% include chatit_header.ejs %>
-    <div class="container">
-        <div class="row" style="margin-top:15px;">
-
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-list-alt"></span><b>消息</b></div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <ul class="demo1">
-                                    <li>
-                                        <table cellpadding="4">
-                                            <tr>
-                                                <td><img src="/image/1.png" width="60" class="img-circle" /></td>
-                                                <td><b>&nbsp;&nbsp;李文勇</b></td>
-                                            </tr>
-                                        </table>
-                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
-                                    </li>
-                                    <li>
-                                        <table cellpadding="4">
-                                            <tr>
-                                                <td><img src="/image/2.png" width="60" class="img-circle" /></td>
-                                                <td><b>&nbsp;&nbsp;李文勇</b></td>
-                                            </tr>
-                                        </table>
-                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
-                                    </li>
-                                    <li>
-                                        <table cellpadding="4">
-                                            <tr>
-                                                <td><img src="/image/3.png" width="60" class="img-circle" /></td>
-                                                <td><b>&nbsp;&nbsp;李文勇</b></td>
-                                            </tr>
-                                        </table>
-                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
-                                    </li>
-                                    <li>
-                                        <table cellpadding="4">
-                                            <tr>
-                                                <td><img src="/image/4.png" width="60" class="img-circle" /></td>
-                                                <td><b>&nbsp;&nbsp;李文勇</b></td>
-                                            </tr>
-                                        </table>
-                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
-                                    </li>
-                                    <li>
-                                        <table cellpadding="4">
-                                            <tr>
-                                                <td><img src="/image/5.png" width="60" class="img-circle" /></td>
-                                                <td><b>&nbsp;&nbsp;李文勇</b></td>
-                                            </tr>
-                                        </table>
-                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
-                                    </li>
-                                    <li>
-                                        <table cellpadding="4">
-                                            <tr>
-                                                <td><img src="/image/6.png" width="60" class="img-circle" /></td>
-                                                <td><b>&nbsp;&nbsp;李文勇</b></td>
-                                            </tr>
-                                        </table>
-                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
-                                    </li>
-                                    <li>
-                                        <table cellpadding="4">
-                                            <tr>
-                                                <td><img src="/image/7.png" width="60" class="img-circle" /></td>
-                                                <td><b>&nbsp;&nbsp;李文勇</b></td>
-                                            </tr>
-                                        </table>
-                                        <hr style="height:1px;border:none;border-top:1px dashed #000000;" />
-                                    </li>
-                                </ul>
-                            </div>
+<meta id="friendname" name="friendname" content=<%-"'"+friendname+"'"%>>
+<meta id="friendsid" name="friendid" content=<%-"'"+friendid+"'"%>>
+<div class="container">
+    <div class="row" style="margin-top:15px;">
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:#34495E;border-bottom: 0px solid transparent;">
+                    <span class="glyphicon glyphicon-list-alt" style="color:#FEFEFE;"></span>
+                    <b style="color:#FEFEFE">消息</b>
+                </div>
+                <div class="panel-body" style="padding:0px">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul id="friendbox" class="demo1"></ul>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <button class="btn btn-primary btn-wide">清空</button>
-
-                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <button class="btn btn-primary btn-wide">清空</button>
                 </div>
             </div>
-            <style>
-                .panel-body {
-                    min-height: 660px;
-                    max-height: 0px;
-                    overflow: auto;
-                    ;
-                }
+        </div>
+        <style>
+            .panel-body {
+                min-height: 660px;
+                max-height: 0;
+                overflow: auto;
+            }
+            .panel-footer {
+                padding: 1px 12px;
+                background-color: #34495E;
+            }
 
-                .panel-footer {
-                    padding: 1px 12px 1px 12px;
-                }
+            .form-group {
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
 
-                .form-group {
-                    margin-bottom: 10px;
-                    margin-top: 10px;
-                }
+            .btn-wide {
+                padding-left: 30px;
+                padding-right: 30px;
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
 
-                .btn-wide {
-                    min-width: 160px;
-                    padding-left: 30px;
-                    padding-right: 30px;
-                    margin-bottom: 10px;
-                    margin-top: 10px;
-                }
-            </style>
+        </style>
 
-            <!-- 聊天区 -->
-            <div class="col-md-9">
-                <!-- 聊天内容 -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-earphone"></span> &nbsp;李文勇
-                    </div>
-                    <div class="panel-body chat-body">
-                        <ul id="messages" class="content-reply-box mg10">
-                        </ul>
-
-                    </div>
-                    <div class="panel-footer">
-                        <form action="/chat" autocomplete=off>
-                            <div class="col-bg-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input id="m" type="text" class="form-control">
-                                        <span class="input-group-btn"><button class="btn btn-default" type="submit">发送</button></span>
-                                    </div>
+        <!-- 聊天区 -->
+        <div class="col-md-9 col-sm-9 col-xs-9">
+            <!-- 聊天内容 -->
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:#34495E">
+                    <span class="glyphicon glyphicon-earphone" style="color:#FEFEFE"></span>
+                    <b id="messageboxname" style="color:#FEFEFE"></b>
+                </div>
+                <div id="messagebox" class="panel-body chat-body">
+                    <ul id="messages" class="content-reply-box mg10"></ul>
+                </div>
+                <div class="panel-footer">
+                    <form action="/chat" autocomplete=off>
+                        <div class="col-bg-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="m" type="text" class="form-control">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit" onclick="scroll2bottom()">发送</button>
+                                    </span>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <script src="javascripts/socket.io.js"></script>
-    <script>
-        var socket = io();
-        $('form').submit(function() {
-            $('#messages').append($("<li></li>")
-                .attr("class", "even")
-                .append($("<a></a>")
-                    .attr("class", "user")
-                    .append($("<img></img>")
-                        .attr("class", "img-responsive avatar_")
-                        .attr("src", "image/a.jpg")))
-                .append($("<div></div>")
-                    .attr("class", "reply-content-box")
-                    .append($("<span></span>")
-                        .attr("class", "reply-time")
-                        .text(getNowFormatDate()))
-                    .append($("<div></div>")
-                        .attr("class", "reply-content pr")
-                        .append($("<span></span>")
-                            .attr("class", "arrow"))
-                        .text($('#m').val()))));
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
-        });
-        socket.on('chat message', function(msg) {
-            $('#messages').append($("<li></li>")
-                .attr("class", "odd")
-                .append($("<a></a>")
-                    .attr("class", "user")
-                    .append($("<img></img>")
-                        .attr("class", "img-responsive avatar_")
-                        .attr("src", "image/a.jpg")))
-                .append($("<div></div>")
-                    .attr("class", "reply-content-box")
-                    .append($("<span></span>")
-                        .attr("class", "reply-time")
-                        .text(getNowFormatDate()))
-                    .append($("<div></div>")
-                        .attr("class", "reply-content pr")
-                        .append($("<span></span>")
-                            .attr("class", "arrow"))
-                        .text(msg))));
-        });
-
-        function getNowFormatDate() {
-            var date = new Date();
-            var seperator1 = "-";
-            var seperator2 = ":";
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-            return currentdate;
-        }
-    </script>
-    <!-- /container -->
+</div>
+<script src="javascripts/socket.io.js"></script>
+<script src="javascripts/chatpage.js"></script>
+<!-- /container -->

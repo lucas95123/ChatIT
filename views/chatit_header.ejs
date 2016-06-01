@@ -6,6 +6,7 @@
     <title>无聊-基于Web的即时通讯系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta id="userid" , name="userid" , content=<%- "'"+userid+ "'"%>>
     <!-- Loading Bootstrap -->
     <link href="/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -49,7 +50,7 @@
                 <li><a href="/chat">消息<span class="navbar-unread">1</span></a></li>
                 <li><a href="/friends">好友</a></li>
             </ul>
-            <form class="navbar-form navbar-left" action="#" role="search">
+            <%# <form class="navbar-form navbar-left" action="#" role="search">
                 <div class="form-group">
                     <div class="input-group">
                         <input class="form-control" id="na-leftarInput-01" type="search" placeholder="Search">
@@ -58,10 +59,11 @@
                         </span>
                     </div>
                 </div>
-            </form>
+            </form>%>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%-username%><b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <%-username%><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/personalinfo">个人信息</a></li>
                         <li class="divider"></li>
@@ -70,13 +72,15 @@
                     </ul>
                 </li>
                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-              </ul>
+            </ul>
         </div>
         <!-- /.navbar-collapse -->
     </nav>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="javascripts/vendor/jquery.min.js"></script>
+    <!-- jQuery.Cookie (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="javascripts/vendor/jquery.cookie.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="javascripts/flat-ui.min.js"></script>
 

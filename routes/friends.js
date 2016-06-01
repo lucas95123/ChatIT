@@ -24,7 +24,8 @@ var renderFriendPage = function(req, res) {
             console.log(friendsinfo);
             res.render('chatit_friends', {
                 friends: friendsinfo,
-                username: req.session.username
+                username: req.session.username,
+                userid: req.session.userid
             })
         } else {
             res.render('error', {
@@ -48,7 +49,8 @@ router.get('/searchfriends', function(req, res, next) {
         var vals = [];
         res.render('chatit_addfriend', {
             user: vals,
-            username: req.session.username
+            username: req.session.username,
+            userid: req.session.userid
         });
     }
 })
@@ -58,7 +60,8 @@ router.post('/searchfriends', function(req, res, next) {
         console.log(vals);
         res.render('chatit_addfriend', {
             user: vals,
-            username: req.session.username
+            username: req.session.username,
+            userid: req.session.userid
         })
     })
 })
