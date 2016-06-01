@@ -2,7 +2,7 @@ var userinfostr = $.cookie('userinfo').substring(2, $.cookie('userinfo').length)
 var userinfo = eval('(' + userinfostr + ')');
 var socket = io();
 var uid = $("#userid").attr("content");
-var fid = $("#friendsid").attr("content");
+var fname = $("#friendname").attr("content");
 var msgqueue = loadMsgQuene();
 
 function loadMsgQuene() {
@@ -16,12 +16,88 @@ function loadMsgQuene() {
     return msgque;
 }
 
-function add2MsgQueue(fid, msgtext, timestamp, role) {
-
-}
-
 function saveMsgQueue() {
     $.cookie('msgqueue', JSON.stringify(msgqueue));
+}
+
+function handleClick(arg) {
+    $('#' + fname).attr("class", "btn btn-default btn-wide btn-block");
+    fname = arg.id;
+    $('#' + fname).attr("class", "btn btn-primary btn-wide btn-block");
+    $('#messageboxname').text(fname);
+    renderMsgBox();
+}
+
+function renderFriendbox() {
+    var usermsg = msgqueue[uid];
+    var flagfirst = 0;
+    for (friend in usermsg) {
+        if (flagfirst == 0 && fname == 'undefined') {
+            fname = friend;
+            flagfirst = 1;
+        }
+        $("#friendbox").append($("<li></li>")
+            .append($("<button></button>").attr("class", "btn btn-default btn-wide btn-block").attr("id", friend).attr("style", "border-radius:0px;margin-bottom:0px;margin-top:0px").attr("onclick", "handleClick(this)")
+                .append($("<table></table>").attr("cellpadding", "4")
+                    .append($("<tr></tr>")
+                        .append($("<td></td>")
+                            //.append($("<img></img>").attr("src", "/image/1.png"), attr("width", "60").attr("class", "img-circle"))
+                            .append($("<td></td>")
+                                .append($("<b></b>").text(friend))
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    }
+    $('#messageboxname').text(fname);
+    $('#' + fname).attr("class", "btn btn-primary btn-wide btn-block");
+}
+
+function renderMsgBox() {
+    $("#messages").empty();
+    for (var i = 0; i < msgqueue[uid][fname].length; i++) {
+        var m = msgqueue[uid][fname][i];
+        if (m.role == 1) {
+            $("#messages").append($("<li></li>")
+                .attr("class", "even")
+                .append($("<a></a>")
+                    .attr("class", "user")
+                    .append($("<img></img>")
+                        .attr("class", "img-responsive avatar_")
+                        .attr("src", "image/a.jpg")))
+                .append($("<div></div>")
+                    .attr("class", "reply-content-box")
+                    .append($("<span></span>")
+                        .attr("class", "reply-time")
+                        .text(m.timestamp))
+                    .append($("<div></div>")
+                        .attr("class", "reply-content pr")
+                        .append($("<span></span>")
+                            .attr("class", "arrow"))
+                        .text(m.msgtext))));
+        } else {
+            $("#messages").append($("<li></li>")
+                .attr("class", "odd")
+                .append($("<a></a>")
+                    .attr("class", "user")
+                    .append($("<img></img>")
+                        .attr("class", "img-responsive avatar_")
+                        .attr("src", "image/a.jpg")))
+                .append($("<div></div>")
+                    .attr("class", "reply-content-box")
+                    .append($("<span></span>")
+                        .attr("class", "reply-time")
+                        .text(m.timestamp))
+                    .append($("<div></div>")
+                        .attr("class", "reply-content pr")
+                        .append($("<span></span>")
+                            .attr("class", "arrow"))
+                        .text(m.msgtext))));
+        }
+    }
+
 }
 
 function deleteMsgQueue() {
@@ -52,26 +128,14 @@ function scroll2bottom() {
 $(document).ready(function() {
     if (msgqueue[uid] == undefined)
         msgqueue[uid] = new Map();
-    if (fid != "undefined") {
-        if (msgqueue[uid][fid] == undefined) {
-            msgqueue[uid][fid] = new Array();
+    if (fname != "undefined") {
+        if (msgqueue[uid][fname] == undefined) {
+            msgqueue[uid][fname] = new Array();
         }
         //Add the friend tag to the history box
-        $("#friendbox").prepend($("<li></li>")
-            .append($("<button></button>").attr("class", "btn btn-primary btn-wide btn-block")
-                .append($("<table></table>").attr("cellpadding", "4")
-                    .append($("<tr></tr>")
-                        .append($("<td></td>")
-                            //.append($("<img></img>").attr("src", "/image/1.png"), attr("width", "60").attr("class", "img-circle"))
-                            .append($("<td></td>")
-                                .append($("<b></b>").text($("#friendname").attr("content")))
-                            )
-                        )
-                    )
-                )
-            )
-        )
     }
+    renderFriendbox();
+    renderMsgBox();
 })
 
 $("form").submit(function() {
@@ -94,20 +158,19 @@ $("form").submit(function() {
                         .attr("class", "arrow"))
                     .text($("#m").val()))));
         socket.emit("chatmessage", "{\"msg\":\"" + $("#m").val() + "\", \"uid\":" + uid + ", \"fid\":3}");
-        var msgquestr = $.cookie('msgqueue');
-        socket.emit("debugmessage", msgquestr);
         msg = new Object();
         msg.msgtext = $("#m").val();
         msg.timestamp = getNowFormatDate();
         msg.role = 1;
-        msgqueue[uid][fid][0]=msg;
+        //socket.emit("debugmessage", "uid:"+uid+" fid:"+fid+" message:"+JSON.stringify(msgqueue));
+        msgqueue[uid][fname].push(msg);
         saveMsgQueue()
         $("#m").val("");
     }
     return false;
 });
 
-socket.on("chatmessage", function(msg) {
+socket.on("chatmessage", function(message) {
     $("#messages").append($("<li></li>")
         .attr("class", "odd")
         .append($("<a></a>")
@@ -124,5 +187,12 @@ socket.on("chatmessage", function(msg) {
                 .attr("class", "reply-content pr")
                 .append($("<span></span>")
                     .attr("class", "arrow"))
-                .text(msg))));
+                .text(message))));
+    msg = new Object();
+    msg.msgtext = message;
+    msg.timestamp = getNowFormatDate();
+    msg.role = 0;
+    //socket.emit("debugmessage", "uid:"+uid+" fid:"+fid+" message:"+JSON.stringify(msgqueue));
+    msgqueue[uid][fname].push(msg);
+    saveMsgQueue()
 });
