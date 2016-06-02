@@ -27,9 +27,8 @@ io.on('connection', function(socket) {
         }
         if (socketMap[mesg.fid] == undefined)
             socketMap[mesg.uid].emit("infomessage", "Friend Offline")
-        else
-        {
-          socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
+        else {
+            socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
         }
     });
 
@@ -41,7 +40,10 @@ io.on('connection', function(socket) {
     socket.on('identification', function(msg) {
         socketMap[msg] = socket;
         log("user:" + msg + " connected", "identification msg");
+    })
 
+    socket.on('userexit', function(uid) {
+        msgqueue.remove(uid);
     })
 });
 
