@@ -55,6 +55,16 @@ var login = function(req, res) {
         res.render('chatit_login');
 }
 
+router.post('/book', function(req, res){
+   console.log("post received");
+	console.log(req.body);
+})
+
+router.get('/book', function(req, res){
+    console.log("get reveived");
+    console.log(req.body);
+})
+
 /* GET home page. */
 router.get('/', login);
 
