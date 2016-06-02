@@ -27,9 +27,9 @@ io.on('connection', function(socket) {
             console.log(socketMap[mesg.uid]);
         }
         if (socketMap[mesg.fid] == undefined)
-            socketMap[mesg.uid].emit("chatmessage", "Friend Offline")
+            socketMap[mesg.uid].emit("infomessage", "Friend Offline")
         else
-            socketMap[mesg.fid].emit('chatmessage', mesg.msg);
+            socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
     });
 
     socket.on('debugmessage', function(msg) {
