@@ -28,12 +28,10 @@ io.on('connection', function(socket) {
             console.log(socketMap);
         }
         if (socketMap[mesg.fid] == undefined)
-            socketMap[mesg.uid].emit("chatmessage", "Friend Offline")
-        else{
-	    console.log("send to:"+mesg.fid);
-            socketMap[mesg.fid].emit('chatmessage', mesg.msg);
-	}   
-	 });
+            socketMap[mesg.uid].emit("infomessage", "Friend Offline")
+        else
+            socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
+    });
 
     socket.on('debugmessage', function(msg) {
         log(msg, "debugmessage");

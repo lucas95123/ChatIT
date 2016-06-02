@@ -173,7 +173,6 @@ $("form").submit(function() {
         saveMsgQueue()
         $("#m").val("");
     }
-    return false;
     scroll2bottom();
 });
 
@@ -204,3 +203,7 @@ socket.on("chatmessage", function(message) {
     saveMsgQueue();
     scroll2bottom();
 });
+
+socket.on("infomessage", function(messge) {
+    $("#messages").append($("<li></li>").text(messge);)
+})
