@@ -172,9 +172,9 @@ $("form").submit(function() {
         msgqueue[uid][fname].push(msg);
         saveMsgQueue()
         $("#m").val("");
-        scroll2bottom();
     }
     return false;
+    scroll2bottom();
 });
 
 socket.on("chatmessage", function(message) {
@@ -201,5 +201,6 @@ socket.on("chatmessage", function(message) {
     msg.role = 0;
     //socket.emit("debugmessage", "uid:"+uid+" fid:"+fid+" message:"+JSON.stringify(msgqueue));
     msgqueue[uid][fname].push(msg);
-    saveMsgQueue()
+    saveMsgQueue();
+    scroll2bottom();
 });

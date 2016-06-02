@@ -18,10 +18,11 @@ function showOnlineUsers() {
 io.on('connection', function(socket) {
     console.log("A user connection");
     showOnlineUsers();
+    socket.emit('chatmessage', "Welcome to ChatIT");    
 
     socket.on('chatmessage', function(msg) {
          showOnlineUsers();
-	 var mesg = eval('(' + msg + ')');
+        var mesg = eval('(' + msg + ')');
         console.log(mesg);
         if (mesg.msg == "debug") {
             console.log(socketMap);
