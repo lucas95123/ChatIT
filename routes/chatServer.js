@@ -1,5 +1,7 @@
 var io = require('socket.io')();
 
+var socketMap = new Array();
+
 log = function(msg, sender) {
     console.log("==============from: " + sender + "==============");
     console.log(msg);
@@ -8,13 +10,23 @@ log = function(msg, sender) {
 
 io.on('connection', function(socket) {
     console.log("A user connection");
+
     socket.on('chatmessage', function(msg) {
         var mesg = eval('(' + msg + ')');
-        console.log(mesg.uid);
-        socket.broadcast.emit('chatsmessage', msg);
+        console.log(mesg);
+        if (mesg.msg == "debug") {
+            console.log(socketMap[mesg.uid]);
+        }
+        socketMap[mesg.fid].emit('chatmessage', mesg.msg);
     });
+
     socket.on('debugmessage', function(msg) {
-        log(msg, "debugmessage")
+        log(msg, "debugmessage");
+    })
+
+    socket.on('identification', function(msg) {
+        log(msg, "identification msg");
+        socketMap[msg] = socket;
     })
 });
 

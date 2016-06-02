@@ -21,12 +21,17 @@ exports.addFriends = function(user_id, friend_id, callback) {
     sql += friend_id + ', \'未分组\');';
     console.log(sql);
     searchManager.query(sql, function(qerr, vals) {
-        if (qerr) {
-            callback(qerr);
-            return;
-        } else {
-            callback(qerr, vals);
-        }
+        sql = 'insert into FriendInfo values(';
+        sql += friend_id + ',';
+        sql += user_id + ', \'未分组\');';
+        searchManager.query(sql, function(qerr, vals) {
+            if (qerr) {
+                callback(qerr);
+                return;
+            } else {
+                callback(qerr, vals);
+            }
+        })
     })
 }
 
@@ -61,9 +66,9 @@ exports.deleteFriends = function(user_id, friend_id, callback) {
 
 exports.changeTag = function(user_id, friend_id, tag, callback) {
     sql = 'update FriendInfo set tag=';
-    sql+='\''+tag+'\' where user_id=';
-    sql+=user_id+" and friend_id=";
-    sql+=friend_id;
+    sql += '\'' + tag + '\' where user_id=';
+    sql += user_id + " and friend_id=";
+    sql += friend_id;
     console.log(sql);
     searchManager.query(sql, function(qerr, vals) {
         if (qerr) {
