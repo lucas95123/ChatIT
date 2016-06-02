@@ -129,6 +129,7 @@ router.get('/personalinfo', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
     res.clearCookie('userinfo');
+    res.clearCookie('msgqueue');
     req.session.username = undefined;
     req.session.passwd = undefined;
     res.render('chatit_login');
