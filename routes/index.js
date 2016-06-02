@@ -6,7 +6,6 @@ var router = express.Router();
 var renderFriendPage = function(req, res) {
     friendManager.getFriends(req.session.userid, function(err, vals) {
         if (!err) {
-            console.log(vals);
             var friendsinfo = new Array();
             var count_tag = -1;
             var name_tag = "";
@@ -34,22 +33,13 @@ var renderFriendPage = function(req, res) {
     })
 }
 
-var logdebug = function(msg, sender) {
-    console.log("=================================");
-    console.log(msg);
-    console.log("from: " + sender);
-    console.log("=================================");
-}
-
 var login = function(req, res) {
-    logdebug(req.cookies['userinfo'], "login")
     if (req.session.username != undefined || req.session.username != null) {
         renderFriendPage(req, res);
     } else if (req.cookies['userinfo'] != undefined) {
         req.session.username = req.cookies['userinfo'].user_name;
         req.session.passwd = req.cookies['userinfo'].passwd;
         req.session.userid = req.cookies['userinfo'].user_id;
-        console.log(req.session);
         renderFriendPage(req, res);
     } else
         res.render('chatit_login');
@@ -94,7 +84,6 @@ router.post('/login', function(req, res) {
             }
             req.session.username = req.body.username;
             req.session.passwd = req.body.passwd;
-            console.log(vals[0].user_id);
             req.session.userid = vals[0].user_id;
             renderFriendPage(req, res);
         }

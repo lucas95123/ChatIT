@@ -6,7 +6,6 @@ var router = express.Router();
 var renderFriendPage = function(req, res) {
     friendManager.getFriends(req.session.userid, function(err, vals) {
         if (!err) {
-            console.log(vals);
             var friendsinfo = new Array();
             var count_tag = -1;
             var name_tag = "";
@@ -21,7 +20,6 @@ var renderFriendPage = function(req, res) {
                 friendsinfo[count_tag][j] = vals[i];
                 j += 1;
             }
-            console.log(friendsinfo);
             res.render('chatit_friends', {
                 friends: friendsinfo,
                 username: req.session.username,
