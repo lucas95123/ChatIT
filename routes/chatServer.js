@@ -17,7 +17,10 @@ io.on('connection', function(socket) {
         if (mesg.msg == "debug") {
             console.log(socketMap[mesg.uid]);
         }
-        socketMap[mesg.fid].emit('chatmessage', mesg.msg);
+        if(socketMap[mesg.fid]==undefined)
+          socketMap[mesg.uid].emit("chatmessage", "Friend Offline")
+        else
+          socketMap[mesg.fid].emit('chatmessage', mesg.msg);
     });
 
     socket.on('debugmessage', function(msg) {
