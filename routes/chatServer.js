@@ -20,16 +20,19 @@ io.on('connection', function(socket) {
     showOnlineUsers();
 
     socket.on('chatmessage', function(msg) {
-        var mesg = eval('(' + msg + ')');
+         showOnlineUsers();
+	 var mesg = eval('(' + msg + ')');
         console.log(mesg);
         if (mesg.msg == "debug") {
-            console.log(socketMap[mesg.uid]);
+            console.log(socketMap);
         }
         if (socketMap[mesg.fid] == undefined)
             socketMap[mesg.uid].emit("chatmessage", "Friend Offline")
-        else
+        else{
+	    console.log("send to:"+mesg.fid);
             socketMap[mesg.fid].emit('chatmessage', mesg.msg);
-    });
+	}   
+	 });
 
     socket.on('debugmessage', function(msg) {
         log(msg, "debugmessage");
