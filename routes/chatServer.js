@@ -20,6 +20,7 @@ io.on('connection', function(socket) {
     showOnlineUsers();
 
     socket.on('chatmessage', function(msg) {
+        showOnlineUsers();
         var mesg = eval('(' + msg + ')');
         console.log(mesg);
         if (mesg.msg == "debug") {
