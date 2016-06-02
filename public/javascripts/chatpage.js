@@ -140,6 +140,7 @@ $(document).ready(function() {
     renderFriendbox();
     renderMsgBox();
     sendIdentification(uid);
+    scroll2bottom();
 })
 
 $("form").submit(function() {
@@ -171,6 +172,7 @@ $("form").submit(function() {
         msgqueue[uid][fname].push(msg);
         saveMsgQueue()
         $("#m").val("");
+        scroll2bottom();
     }
     return false;
 });
