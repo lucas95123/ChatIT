@@ -22,14 +22,15 @@ io.on('connection', function(socket) {
     socket.on('chatmessage', function(msg) {
         showOnlineUsers();
         var mesg = eval('(' + msg + ')');
-        console.log(mesg);
         if (mesg.msg == "debug") {
             console.log(socketMap[mesg.uid]);
         }
         if (socketMap[mesg.fid] == undefined)
             socketMap[mesg.uid].emit("infomessage", "Friend Offline")
         else
-            socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
+        {
+          socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
+        }
     });
 
     socket.on('debugmessage', function(msg) {

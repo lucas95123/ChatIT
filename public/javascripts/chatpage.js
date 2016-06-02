@@ -122,6 +122,7 @@ function getNowFormatDate() {
 function scroll2bottom() {
     var vs = document.getElementById("messagebox").innerHTML;
     document.getElementById("messagebox").scrollTop = document.getElementById("messagebox").scrollHeight;
+    return;
 }
 
 function sendIdentification(msg) {
@@ -162,6 +163,7 @@ $("form").submit(function() {
                     .append($("<span></span>")
                         .attr("class", "arrow"))
                     .text($("#m").val()))));
+        sendIdentification(uid);
         socket.emit("chatmessage", "{\"msg\":\"" + $("#m").val() + "\", \"uid\":" + uid + ", \"fid\":" + fid + "}");
         msg = new Object();
         msg.msgtext = $("#m").val();
@@ -174,6 +176,7 @@ $("form").submit(function() {
         $("#m").val("");
     }
     scroll2bottom();
+    return false;
 });
 
 socket.on("chatmessage", function(message) {
@@ -198,12 +201,12 @@ socket.on("chatmessage", function(message) {
     msg.msgtext = mg;
     msg.timestamp = getNowFormatDate();
     msg.role = 0;
-    //socket.emit("debugmessage", "uid:"+uid+" fid:"+fid+" message:"+JSON.stringify(msgqueue));
     msgqueue[uid][fname].push(msg);
     saveMsgQueue();
     scroll2bottom();
 });
 
-socket.on("infomessage", function(messge) {
-    $("#messages").append($("<li></li>").text(messge);)
+socket.on("infomessage", function(message) {
+    $("#messages").append($("<li></li>").text(message));
+    scroll2bottom();
 })
