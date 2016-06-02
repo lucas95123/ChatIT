@@ -28,6 +28,7 @@ function handleClick(arg) {
     fid = msgqueue[uid][fname][0].f_id;
     $('#messageboxname').text(fname);
     renderMsgBox();
+    scroll2bottom();
 }
 
 function renderFriendbox() {
@@ -198,15 +199,20 @@ socket.on("chatmessage", function(message) {
                     .attr("class", "arrow"))
                 .text(message))));
     msg = new Object();
-    msg.msgtext = mg;
+    msg.msgtext = message;
     msg.timestamp = getNowFormatDate();
     msg.role = 0;
     msgqueue[uid][fname].push(msg);
     saveMsgQueue();
     scroll2bottom();
+    return false;
 });
 
 socket.on("infomessage", function(message) {
     $("#messages").append($("<li></li>").text(message));
     scroll2bottom();
 })
+
+window.unonload = function(){
+  socket.emit("userexit",uid);
+}
