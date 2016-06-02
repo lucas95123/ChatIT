@@ -3,6 +3,7 @@ var userinfo = eval('(' + userinfostr + ')');
 var socket = io();
 var uid = $("#userid").attr("content");
 var fname = $("#friendname").attr("content");
+var fid = $("#friendsid").attr("content");
 var msgqueue = loadMsgQuene();
 
 function loadMsgQuene() {
@@ -24,6 +25,7 @@ function handleClick(arg) {
     $('#' + fname).attr("class", "btn btn-default btn-wide btn-block");
     fname = arg.id;
     $('#' + fname).attr("class", "btn btn-primary btn-wide btn-block");
+    fid = msgqueue[uid][fname][0].f_id;
     $('#messageboxname').text(fname);
     renderMsgBox();
 }
@@ -34,9 +36,10 @@ function renderFriendbox() {
     for (friend in usermsg) {
         if (flagfirst == 0 && fname == 'undefined') {
             fname = friend;
+            fid = msgqueue[uid][friend][0].f_id;
             flagfirst = 1;
         }
-        $("#friendbox").append($("<li></li>")
+        $("#friendbox").prepend($("<li></li>")
             .append($("<button></button>").attr("class", "btn btn-default btn-wide btn-block").attr("id", friend).attr("style", "border-radius:0px;margin-bottom:0px;margin-top:0px").attr("onclick", "handleClick(this)")
                 .append($("<table></table>").attr("cellpadding", "4")
                     .append($("<tr></tr>")
@@ -100,10 +103,6 @@ function renderMsgBox() {
 
 }
 
-function deleteMsgQueue() {
-
-}
-
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -125,6 +124,10 @@ function scroll2bottom() {
     document.getElementById("messagebox").scrollTop = document.getElementById("messagebox").scrollHeight;
 }
 
+function sendIdentification(msg) {
+    socket.emit("identification", msg);
+}
+
 $(document).ready(function() {
     if (msgqueue[uid] == undefined)
         msgqueue[uid] = new Map();
@@ -136,6 +139,7 @@ $(document).ready(function() {
     }
     renderFriendbox();
     renderMsgBox();
+    sendIdentification(uid);
 })
 
 $("form").submit(function() {
@@ -157,11 +161,12 @@ $("form").submit(function() {
                     .append($("<span></span>")
                         .attr("class", "arrow"))
                     .text($("#m").val()))));
-        socket.emit("chatmessage", "{\"msg\":\"" + $("#m").val() + "\", \"uid\":" + uid + ", \"fid\":3}");
+        socket.emit("chatmessage", "{\"msg\":\"" + $("#m").val() + "\", \"uid\":" + uid + ", \"fid\":" + fid + "}");
         msg = new Object();
         msg.msgtext = $("#m").val();
         msg.timestamp = getNowFormatDate();
         msg.role = 1;
+        msg.f_id = fid;
         //socket.emit("debugmessage", "uid:"+uid+" fid:"+fid+" message:"+JSON.stringify(msgqueue));
         msgqueue[uid][fname].push(msg);
         saveMsgQueue()
@@ -189,7 +194,7 @@ socket.on("chatmessage", function(message) {
                     .attr("class", "arrow"))
                 .text(message))));
     msg = new Object();
-    msg.msgtext = message;
+    msg.msgtext = mg;
     msg.timestamp = getNowFormatDate();
     msg.role = 0;
     //socket.emit("debugmessage", "uid:"+uid+" fid:"+fid+" message:"+JSON.stringify(msgqueue));
