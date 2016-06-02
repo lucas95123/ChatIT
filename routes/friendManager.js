@@ -79,3 +79,29 @@ exports.changeTag = function(user_id, friend_id, tag, callback) {
         }
     })
 }
+
+exports.findNameByID = function(fid, callback) {
+    sql = "select user_name from AccountInfo where user_id=" + fid;
+    console.log(sql);
+    searchManager.query(sql, function(qerr, vals) {
+        if (qerr) {
+            callback(qerr);
+            return;
+        } else {
+            callback(qerr, vals[0].user_name);
+        }
+    })
+}
+
+exports.findIDByName = function(fname, callback) {
+    sql = "select user_id from AccountInfo where user_name=" + "\'"+fname+"\'";
+    console.log(sql);
+    searchManager.query(sql, function(qerr, vals) {
+        if (qerr) {
+            callback(qerr);
+            return;
+        } else {
+            callback(qerr, vals[0].user_id);
+        }
+    })
+}

@@ -25,10 +25,12 @@ function handleClick(arg) {
     $('#' + fname).attr("class", "btn btn-default btn-wide btn-block");
     fname = arg.id;
     $('#' + fname).attr("class", "btn btn-primary btn-wide btn-block");
-    fid = msgqueue[uid][fname][0].f_id;
-    $('#messageboxname').text(fname);
-    renderMsgBox();
-    scroll2bottom();
+    getFriendID(fname, function(id) {
+        fid = id;
+        $('#messageboxname').text(fname);
+        renderMsgBox();
+        scroll2bottom();
+    })
 }
 
 function renderFriendbox() {
@@ -180,7 +182,83 @@ $("form").submit(function() {
     return false;
 });
 
-socket.on("chatmessage", function(message) {
+function getFriendID(f_name, callback) {
+    var xmlhttp;
+    if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else { // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.open("GET", "/getFriendID?fname=" + f_name, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var res = eval('(' + xmlhttp.responseText + ')');
+            if (callback != null) {
+                callback(res.id);
+            }
+        }
+    }
+}
+
+function getFriendName(f_id, callback) {
+    var xmlhttp;
+    if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else { // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.open("GET", "/getFriendName?fid=" + f_id, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var res = eval('(' + xmlhttp.responseText + ')');
+            if (callback != null) {
+                callback(res.name);
+            }
+        }
+    }
+}
+
+socket.on("chatmessage", function(message, fid) {
+    // $("#messages").append($("<li></li>")
+    //     .attr("class", "odd")
+    //     .append($("<a></a>")
+    //         .attr("class", "user")
+    //         .append($("<img></img>")
+    //             .attr("class", "img-responsive avatar_")
+    //             .attr("src", "image/a.jpg")))
+    //     .append($("<div></div>")
+    //         .attr("class", "reply-content-box")
+    //         .append($("<span></span>")
+    //             .attr("class", "reply-time")
+    //             .text(getNowFormatDate()))
+    //         .append($("<div></div>")
+    //             .attr("class", "reply-content pr")
+    //             .append($("<span></span>")
+    //                 .attr("class", "arrow"))
+    //             .text(message))));
+    msg = new Object();
+    msg.msgtext = message;
+    msg.timestamp = getNowFormatDate();
+    msg.role = 0;
+    msg.f_id = parseInt(fid);
+
+    getFriendName(fid, function(friendname) {
+        if (msgqueue[uid][friendname] != undefined)
+            msgqueue[uid][friendname].push(msg);
+        else {
+            msgqueue[uid][friendname] = new Array();
+            msgqueue[uid][friendname].push(msg);
+        }
+        saveMsgQueue();
+        renderMsgBox();
+        scroll2bottom();
+        return false;
+    });
+});
+
+socket.on("systemmessage", function(message) {
     $("#messages").append($("<li></li>")
         .attr("class", "odd")
         .append($("<a></a>")
@@ -198,12 +276,6 @@ socket.on("chatmessage", function(message) {
                 .append($("<span></span>")
                     .attr("class", "arrow"))
                 .text(message))));
-    msg = new Object();
-    msg.msgtext = message;
-    msg.timestamp = getNowFormatDate();
-    msg.role = 0;
-    msgqueue[uid][fname].push(msg);
-    saveMsgQueue();
     scroll2bottom();
     return false;
 });
@@ -213,6 +285,6 @@ socket.on("infomessage", function(message) {
     scroll2bottom();
 })
 
-window.unonload = function(){
-  socket.emit("userexit",uid);
+window.unonload = function() {
+    socket.emit("userexit", uid);
 }
