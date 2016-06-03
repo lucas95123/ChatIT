@@ -17,11 +17,9 @@ function showOnlineUsers() {
 
 io.on('connection', function(socket) {
     console.log("A user connection");
-    showOnlineUsers();
-    socket.emit('chatmessage', "Welcome to ChatIT");    
-
+    socket.emit('systemmessage','Welcome to ChatIT');
     socket.on('chatmessage', function(msg) {
-         showOnlineUsers();
+        console.log(msg);
         var mesg = eval('(' + msg + ')');
         if (mesg.msg == "debug") {
             console.log(socketMap);
@@ -35,7 +33,6 @@ io.on('connection', function(socket) {
 
     socket.on('debugmessage', function(msg) {
         log(msg, "debugmessage");
-        showOnlineUsers();
     })
 
     socket.on('identification', function(msg) {

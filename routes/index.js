@@ -135,4 +135,32 @@ router.get('/logout', function(req, res, next) {
     res.render('chatit_login');
 })
 
+router.get('/getFriendName', function(req, res) {
+    friendManager.findNameByID(req.query.fid, function(err, fname) {
+        if (err) {
+            res.render('error', {
+                error: err
+            });
+        } else {
+            res.json({
+                "name": fname
+            });
+        }
+    });
+})
+
+router.get('/getFriendID', function(req, res) {
+    friendManager.findIDByName(req.query.fname, function(err, fid) {
+        if (err) {
+            res.render('error', {
+                error: err
+            });
+        } else {
+            res.json({
+                "id": fid
+            });
+        }
+    });
+})
+
 module.exports = router;
