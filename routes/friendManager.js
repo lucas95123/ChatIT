@@ -69,7 +69,6 @@ exports.changeTag = function(user_id, friend_id, tag, callback) {
     sql += '\'' + tag + '\' where user_id=';
     sql += user_id + " and friend_id=";
     sql += friend_id;
-    console.log(sql);
     searchManager.query(sql, function(qerr, vals) {
         if (qerr) {
             callback(qerr);
