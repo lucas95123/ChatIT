@@ -21,7 +21,8 @@ create table FriendInfo(
 create table OfflineMessage(
   user_id int not null,
   target_id int not null,
-  message text,
+  message text not null,
+  time_stamp datetime not null,
   foreign key(user_id) references AccountInfo(user_id),
   foreign key(target_id) references AccountInfo(user_id)
 ) DEFAULT CHARSET=utf8;

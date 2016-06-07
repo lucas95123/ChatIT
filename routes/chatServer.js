@@ -1,5 +1,5 @@
 var io = require('socket.io')();
-
+var offlineManager = require('./offlineManager');
 var socketMap = new Map();
 
 log = function(msg, sender) {
@@ -17,16 +17,14 @@ function showOnlineUsers() {
 
 io.on('connection', function(socket) {
     console.log("A user connection");
-    socket.emit('systemmessage','Welcome to ChatIT');
+    socket.emit('systemmessage', 'Welcome to ChatIT');
     socket.on('chatmessage', function(msg) {
         console.log(msg);
         var mesg = eval('(' + msg + ')');
-        if (mesg.msg == "debug") {
-            console.log(socketMap);
-        }
-        if (socketMap[mesg.fid] == undefined)
-            socketMap[mesg.uid].emit("infomessage", "Friend Offline")
-        else {
+        if (socketMap[mesg.fid] == undefined || socketMap[mesg.fid].connected == false) {
+            console.log("friend not online");
+            offlineManager.insertOfflineMsg(mesg.uid, mesg.fid, mesg.msg);
+        } else {
             socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
         }
     });
@@ -35,9 +33,22 @@ io.on('connection', function(socket) {
         log(msg, "debugmessage");
     })
 
-    socket.on('identification', function(msg) {
-        socketMap[msg] = socket;
-        log("user:" + msg + " connected", "identification msg");
+    socket.on('identification', function(uid) {
+        socketMap[uid] = socket;
+    })
+
+    socket.on('userenter', function(uid) {
+        socketMap[uid] = socket;
+        log("user:" + uid + " connected", "identification msg");
+        offlineManager.getOfflineMsg(uid, function(err, vals) {
+            if (!err) {
+                console.log(uid+":sending offline messages");
+                for (var i = 0; i < vals.length; i++) {
+                    console.log(vals[i].message);
+                    socket.emit('chatmessage', vals[i].message, vals[i].user_id, vals[i].time_stamp)
+                }
+            }
+        })
     })
 
     socket.on('userexit', function(uid) {

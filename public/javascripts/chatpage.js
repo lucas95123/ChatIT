@@ -47,10 +47,9 @@ function renderFriendbox() {
                 .append($("<table></table>").attr("cellpadding", "4")
                     .append($("<tr></tr>")
                         .append($("<td></td>")
-                            //.append($("<img></img>").attr("src", "/image/1.png"), attr("width", "60").attr("class", "img-circle"))
-                            .append($("<td></td>")
-                                .append($("<b></b>").text(friend))
-                            )
+                            .append($("<img></img>").attr("src", "image/a.jpg").attr("width", "60").attr("class", "img-circle")))
+                        .append($("<td></td>")
+                            .append($("<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + friend + "</b>").attr("style", "color:#34495E"))
                         )
                     )
                 )
@@ -128,8 +127,12 @@ function scroll2bottom() {
     return;
 }
 
-function sendIdentification(msg) {
-    socket.emit("identification", msg);
+function sendIdentification(uid) {
+    socket.emit("identification", uid);
+}
+
+function sendEnterMessage(uid) {
+    socket.emit("userenter", uid);
 }
 
 $(document).ready(function() {
@@ -143,7 +146,7 @@ $(document).ready(function() {
     }
     renderFriendbox();
     renderMsgBox();
-    sendIdentification(uid);
+    sendEnterMessage(uid);
     scroll2bottom();
 })
 
@@ -201,7 +204,7 @@ function getFriendID(f_name, callback) {
     }
 }
 
-function getFriendName(f_id, callback) {
+function getFriendName(f_id, msg, callback) {
     var xmlhttp;
     if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp = new XMLHttpRequest();
@@ -214,37 +217,23 @@ function getFriendName(f_id, callback) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var res = eval('(' + xmlhttp.responseText + ')');
             if (callback != null) {
-                callback(res.name);
+                callback(res.name, msg);
             }
         }
     }
 }
 
-socket.on("chatmessage", function(message, fid) {
-    // $("#messages").append($("<li></li>")
-    //     .attr("class", "odd")
-    //     .append($("<a></a>")
-    //         .attr("class", "user")
-    //         .append($("<img></img>")
-    //             .attr("class", "img-responsive avatar_")
-    //             .attr("src", "image/a.jpg")))
-    //     .append($("<div></div>")
-    //         .attr("class", "reply-content-box")
-    //         .append($("<span></span>")
-    //             .attr("class", "reply-time")
-    //             .text(getNowFormatDate()))
-    //         .append($("<div></div>")
-    //             .attr("class", "reply-content pr")
-    //             .append($("<span></span>")
-    //                 .attr("class", "arrow"))
-    //             .text(message))));
+socket.on("chatmessage", function(message, fid, timestamp) {
     msg = new Object();
     msg.msgtext = message;
-    msg.timestamp = getNowFormatDate();
+    if (timestamp == undefined)
+        msg.timestamp = getNowFormatDate();
+    else
+        msg.timestamp = timestamp;
     msg.role = 0;
     msg.f_id = parseInt(fid);
 
-    getFriendName(fid, function(friendname) {
+    getFriendName(fid, msg, function(friendname, msg) {
         if (msgqueue[uid][friendname] != undefined)
             msgqueue[uid][friendname].push(msg);
         else {
