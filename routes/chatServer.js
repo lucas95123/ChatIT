@@ -47,6 +47,7 @@ io.on('connection', function(socket) {
                     console.log(vals[i].message);
                     socket.emit('chatmessage', vals[i].message, vals[i].user_id, vals[i].time_stamp)
                 }
+                offlineManager.deleteOfflineMsg(uid);
             }
         })
     })
