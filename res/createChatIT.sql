@@ -5,7 +5,9 @@ create table AccountInfo(
   user_name varchar(50) not null,
   passwd varchar(50) not null,
   email_addr varchar(50) not null,
-  state boolean,
+  photo varchar(50),
+  motto varchar(50),
+  age smallint,
   unique (user_name)
 ) DEFAULT CHARSET=utf8;
 

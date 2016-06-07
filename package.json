@@ -12,6 +12,8 @@
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "express-session": "^1.13.0",
+    "formidable": "^1.0.17",
+    "gm": "^1.22.0",
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
     "serve-favicon": "~2.3.0",

@@ -1,21 +1,69 @@
 <% include chatit_header.ejs %>
-    <div class="container">
-        <div class="row" style="margin-top:15px;">
-            <!-- 个人信息 -->
-            <div class="col-sm-4 col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-user"></span> &nbsp;个人信息
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-sm-9">
-                            <h5 id="my-nickname">昵称：还未设置</h5></div>
-                        <div class="col-sm-3">
-                            <button class="btn btn-default" onclick="onClickChangeNickname()">修改</button>
+<div class="container">
+    <div class="row" style="margin-top:15px;">
+        <!-- 个人信息 -->
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:#34495E">
+                    <span class="glyphicon glyphicon-user" style="color:#FEFEFE"></span>
+                    <b style="color:#FEFEFE">&nbsp;个人信息</b>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2 text-center">
+                            <img class="img-rounded" src=<%-data[0].photo%>></img>
+                            <form class="form-signin" action="/uploadpic" role="form" method="post" enctype='multipart/form-data'>
+                                <hr>
+                                <input id="fulAvatar" name="fulAvatar" type="file" class="form-control"/>
+                                <hr>
+                                <button id="btnSub" class="btn btn-md btn-primary" type="submit">上 传</button>
+                            </form>
+                        </div>
+                        <div class="col-md-8 col-lg-8">
+                            <form class="form-horizontal" role="form" method="post" action="personalinfo">
+                                <div class="form-group form-sm">
+                                    <label class="col-lg-2 control-label">姓名</label>
+                                    <div class="col-lg-10">
+                                        <input id="info-name" name="user_name" class="form-control" placeholder="李文勇">
+                                    </div>
+                                </div>
+                                <div class="form-group form-sm">
+                                    <label class="col-lg-2 control-label">个性签名</label>
+                                    <div class="col-lg-10">
+                                        <input id="info-motto" name="motto" class="form-control" placeholder="未设置">
+                                    </div>
+                                </div>
+                                <div class="form-group form-sm">
+                                    <label class="col-lg-2 control-label">年龄</label>
+                                    <div class="col-lg-10">
+                                        <input id="info-age" name="age" class="form-control" type="number" min="0" max="150" placeholder="未设置">
+                                    </div>
+                                </div>
+                                <div class="form-group form-sm">
+                                    <label class="col-lg-2 control-label">邮箱</label>
+                                    <div class="col-lg-10">
+                                        <input id="info-email" name="email" class="form-control" placeholder="example@what.com">
+                                    </div>
+                                </div>
+                                <div class="form-group form-sm">
+                                    <label class="col-lg-2 control-label">密码</label>
+                                    <div class="col-lg-10">
+                                        <input id="info-password" name="passwd" type="password" class="form-control login-field" placeholder="请输入您的新密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10 text-center">
+                                        <button id="info-button" type="submit" class="btn btn-md btn-wide btn-info">修改</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /container -->
+</div>
+
+<script src="/javascripts/infopage.js"></script>
+<!-- /container -->

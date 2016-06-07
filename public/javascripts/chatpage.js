@@ -49,8 +49,8 @@ function renderFriendbox() {
                         .append($("<td></td>")
                             .append($("<img></img>").attr("src", "image/a.jpg").attr("width", "60").attr("class", "img-circle")))
                         .append($("<td></td>")
-                            .append($("<b>&nbsp;" + friend + "&nbsp;&nbsp;</b>").attr("style", "color:#34495E"))
-                            .append($("<span id=unreadbadge"+fid+" class=\"badge\"></span>"))
+                            .append($("<b>&nbsp;&nbsp;" + friend + "&nbsp;&nbsp;</b>").attr("style", "color:#34495E"))
+                            .append($("<span id=unreadbadge"+fid+" class=\"badge\">4</span>"))
                         )
                     )
                 )
@@ -80,7 +80,7 @@ function renderMsgBox() {
                         .text(m.timestamp))
                     .append($("<div></div>")
                         .attr("class", "reply-content text-right")
-                        .attr("style", "background-color: #1ABC9C;border-radius:13px")
+                        .attr("style", "background-color: #1ABC9C;border-radius:13px;max-width:656px;margin-left:80px")
                         .append($("<span></span>")
                             .attr("class", "arrow"))
                         .text(m.msgtext))));
@@ -99,7 +99,7 @@ function renderMsgBox() {
                         .text(m.timestamp))
                     .append($("<div></div>")
                         .attr("class", "reply-content text-left")
-                        .attr("style", "background-color: #CCC;border-radius:13px")
+                        .attr("style", "background-color: #CCC;border-radius:13px;max-width:656px")
                         .append($("<span></span>")
                             .attr("class", "arrow"))
                         .text(m.msgtext))));
@@ -169,12 +169,13 @@ $("form").submit(function() {
                     .text(getNowFormatDate()))
                 .append($("<div></div>")
                     .attr("class", "reply-content pr text-right")
-                    .attr("style", "background-color: #1ABC9C;border-radius:13px")
+                    .attr("style", "background-color: #1ABC9C;border-radius:13px;max-width:656px;margin-left:80px")
                     .append($("<span></span>")
                         .attr("class", "arrow"))
                     .text($("#m").val()))));
         sendIdentification(uid);
-        socket.emit("chatmessage", "{\"msg\":\"" + $("#m").val() + "\", \"uid\":" + uid + ", \"fid\":" + fid + "}");
+        socket.emit("chatmessage", "{\"msg\":\"" + escape($("#m").val()) + "\", \"uid\":" + uid + ", \"fid\":" + fid + "}");
+        socket.emit("debugmessage", escape($("#m").val()));
         msg = new Object();
         msg.msgtext = $("#m").val();
         msg.timestamp = getNowFormatDate();

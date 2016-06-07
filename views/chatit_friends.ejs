@@ -39,11 +39,11 @@
                                                     <a id=<%- "'modal-"+i+ ""+j+ "'"%> href=<%-"'#modal-container-"+i+""+j+"'"%> class="list-group-item" data-toggle="modal" data-target=<%- "'#friendinfo-"+i+ ""+j+ "'"%>>
                                                         <div class="row">
                                                             <div class="col-md-1 col-sm-2 col-xs-3">
-                                                                <img src="/image/a.jpg" alt="140*140" class="img-rounded">
+                                                                <img src=<%- "'"+friends[i][j].photo+"_small.png'" %> alt="140*140" class="img-rounded">
                                                             </div>
                                                             <div class="col-md-10 col-sm-8 col-xs-8">
                                                                 <h5 class="list-group-item-heading"><%- friends[i][j].user_name %></h5>
-                                                                <p class="list-group-item-text">个性签名</p>
+                                                                <p class="list-group-item-text"><%- friends[i][j].motto %></p>
                                                             </div>
                                                         </div>
                                                     </a>
@@ -60,17 +60,16 @@
                                                                 <div class="modal-body">
                                                                     <div class="row">
                                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                                            <img src="/image/c.jpg" alt="140*140" class="img-rounded">
+                                                                            <img src=<%- "'"+friends[i][j].photo+".png'" %> alt="140*140" class="img-rounded">
                                                                         </div>
                                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                                             <h5><%-friends[i][j].user_name%></h5>
-                                                                            <b>个性签名</b>
+                                                                            <b><%- friends[i][j].motto %></b>
                                                                             <br>
-                                                                            <b>21岁</b>
+                                                                            <b><%- friends[i][j].age+"岁" %></b>
                                                                             <br>
                                                                             <a>
-                                                                                <%friends[i][j].email_addr%>
-                                                                            </a>
+                                                                                <%- friends[i][j].email_addr%></a>
                                                                             <br>
                                                                             <br>
                                                                             <form class="form-inline" role="form" method="post" action=<%-"'/friends/changegroup?"+"friend_id="+friends[i][j].friend_id+"'"%>>
