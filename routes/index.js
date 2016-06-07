@@ -102,13 +102,46 @@ router.get('/chat', function(req, res, next) {
         });
 })
 
-router.get('/personalinfo', function(req, res, next) {
+router.get('/personalinfo', function(req, res) {
     if (req.session.username == undefined || req.session.username == null)
         res.redirect("/login");
     else
         res.render('chatit_info', {
-            username: req.session.username
+            username: req.session.username,
+            userid: req.session.userid
         });
+})
+
+router.post('/personalinfo', function(req, res) {
+    if (req.session.username == undefined || req.session.username == null)
+        res.redirect("/login");
+    else {
+        accessManager.updateinfo(req.session.userid, req.body.user_name, req.body.motto, req.body.age, req.body.email, req.body.passwd, function(err) {
+            if (err) {
+                res.render('error', {
+                    error: err
+                });
+            } else {
+                res.render('chatit_info', {
+                    username: req.session.username,
+                    userid: req.session.userid
+                });
+            }
+        })
+    }
+})
+
+router.post('/uploadpic', function(req, res) {
+    if (req.session.username == undefined || req.session.username == null)
+        res.redirect("/login");
+    else {
+        accessManager.uploadpic(req, function() {
+            res.render('chatit_info', {
+                username: req.session.username,
+                userid: req.session.userid
+            });
+        })
+    }
 })
 
 router.get('/logout', function(req, res, next) {
@@ -119,6 +152,9 @@ router.get('/logout', function(req, res, next) {
     res.render('chatit_login');
 })
 
+/*AJAX APIS
+ *
+ */
 router.get('/getFriendName', function(req, res) {
     friendManager.findNameByID(req.query.fid, function(err, fname) {
         if (err) {
@@ -145,6 +181,18 @@ router.get('/getFriendID', function(req, res) {
             });
         }
     });
+})
+
+router.get('/getPersonalInfo', function(req, res) {
+    accessManager.getinfo(req.query.uid, function(err, vals) {
+        if (err) {
+            res.render('error', {
+                error: err
+            });
+        } else {
+            res.json(vals);
+        }
+    })
 })
 
 module.exports = router;

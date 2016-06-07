@@ -23,14 +23,14 @@ io.on('connection', function(socket) {
         var mesg = eval('(' + msg + ')');
         if (socketMap[mesg.fid] == undefined || socketMap[mesg.fid].connected == false) {
             console.log("friend not online");
-            offlineManager.insertOfflineMsg(mesg.uid, mesg.fid, mesg.msg);
+            offlineManager.insertOfflineMsg(mesg.uid, mesg.fid, unescape(mesg.msg));
         } else {
             socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
         }
     });
 
     socket.on('debugmessage', function(msg) {
-        log(msg, "debugmessage");
+        log(unescape(msg), "debugmessage");
     })
 
     socket.on('identification', function(uid) {
