@@ -38,24 +38,25 @@
                     <form accept-charset="UTF-8" action="/signup" method="post" role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input type="text" class="form-control login-field" name="username" value="" placeholder="用户名" />
+                                <input type="text" class="form-control login-field" name="username" value="" placeholder="用户名" id="signup-username" required="required"/>
                                 <label class="login-field-icon fui-user" for="login-name"></label>
                             </div>
 
                             <div class="form-group">
-                                <input type="password" class="form-control login-field" name="passwd" value="" placeholder="密码" />
+                                <input type="password" class="form-control login-field" name="passwd" value="" placeholder="密码" id="signup-passwd" required="required" />
                                 <label class="login-field-icon fui-lock" for="login-pass"></label>
                             </div>
 
+
                             <div class="form-group">
-                                <input type="password" class="form-control login-field" name="passwd confirm" value="" placeholder="再次输入密码" />
+                                <input type="password" class="form-control login-field" name="passwd confirm" value="" placeholder="再次输入密码" id="signup-repasswd" required="required" />
                                 <label class="login-field-icon fui-lock" for="login-passconfirm"></label>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control login-field" name="email" value="" placeholder="电子邮箱" />
+                                <input type="text" class="form-control login-field" name="email" value="" placeholder="电子邮箱" id="signup-email" required="required" />
                                 <label class="login-field-icon fui-mail" for="login-email"></label>
                             </div>
-                            <input class="btn btn-info btn-lg btn-block" type="submit" value="注册">
+                            <input class="btn btn-info btn-lg btn-block" type="submit" value="注册" id="signup-button" disabled="disabled">
                         </fieldset>
                     </form>
                 </div>
@@ -68,6 +69,8 @@
     <script src="/javascripts/flat-ui.min.js"></script>
 
     <script src="/javascripts/application.js"></script>
+
+    <script src="/javascripts/signup.js"></script>
 </body>
 
 </html>
