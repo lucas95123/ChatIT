@@ -49,7 +49,8 @@ function renderFriendbox() {
                         .append($("<td></td>")
                             .append($("<img></img>").attr("src", "image/a.jpg").attr("width", "60").attr("class", "img-circle")))
                         .append($("<td></td>")
-                            .append($("<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + friend + "</b>").attr("style", "color:#34495E"))
+                            .append($("<b>&nbsp;" + friend + "&nbsp;&nbsp;</b>").attr("style", "color:#34495E"))
+                            .append($("<span id=unreadbadge"+fid+" class=\"badge\"></span>"))
                         )
                     )
                 )
@@ -78,7 +79,8 @@ function renderMsgBox() {
                         .attr("class", "reply-time")
                         .text(m.timestamp))
                     .append($("<div></div>")
-                        .attr("class", "reply-content pr")
+                        .attr("class", "reply-content text-right")
+                        .attr("style", "background-color: #1ABC9C;border-radius:13px")
                         .append($("<span></span>")
                             .attr("class", "arrow"))
                         .text(m.msgtext))));
@@ -96,7 +98,8 @@ function renderMsgBox() {
                         .attr("class", "reply-time")
                         .text(m.timestamp))
                     .append($("<div></div>")
-                        .attr("class", "reply-content pr")
+                        .attr("class", "reply-content text-left")
+                        .attr("style", "background-color: #CCC;border-radius:13px")
                         .append($("<span></span>")
                             .attr("class", "arrow"))
                         .text(m.msgtext))));
@@ -165,7 +168,8 @@ $("form").submit(function() {
                     .attr("class", "reply-time")
                     .text(getNowFormatDate()))
                 .append($("<div></div>")
-                    .attr("class", "reply-content pr")
+                    .attr("class", "reply-content pr text-right")
+                    .attr("style", "background-color: #1ABC9C;border-radius:13px")
                     .append($("<span></span>")
                         .attr("class", "arrow"))
                     .text($("#m").val()))));
@@ -234,6 +238,16 @@ socket.on("chatmessage", function(message, fid, timestamp) {
     msg.f_id = parseInt(fid);
 
     getFriendName(fid, msg, function(friendname, msg) {
+        if(friendname!=fname)
+        {
+          var count=$("#unreadbadge"+fid).text();
+          if(count=="")
+            count=0;
+          else
+            count=parseInt(count);
+          count+=1;
+          $("#unreadbadge"+fid).text(count);
+        }
         if (msgqueue[uid][friendname] != undefined)
             msgqueue[uid][friendname].push(msg);
         else {
@@ -248,23 +262,6 @@ socket.on("chatmessage", function(message, fid, timestamp) {
 });
 
 socket.on("systemmessage", function(message) {
-    $("#messages").append($("<li></li>")
-        .attr("class", "odd")
-        .append($("<a></a>")
-            .attr("class", "user")
-            .append($("<img></img>")
-                .attr("class", "img-responsive avatar_")
-                .attr("src", "image/a.jpg")))
-        .append($("<div></div>")
-            .attr("class", "reply-content-box")
-            .append($("<span></span>")
-                .attr("class", "reply-time")
-                .text(getNowFormatDate()))
-            .append($("<div></div>")
-                .attr("class", "reply-content pr")
-                .append($("<span></span>")
-                    .attr("class", "arrow"))
-                .text(message))));
     scroll2bottom();
     return false;
 });

@@ -36,3 +36,8 @@ exports.getOfflineMsg = function(id, callback) {
         }
     })
 }
+
+exports.deleteOfflineMsg = function(id) {
+    var sql = "delete from OfflineMessage where target_id=" + id;
+    searchManager.query(sql)
+}
