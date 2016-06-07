@@ -1,10 +1,10 @@
 var searchManager = require('./searchManager');
 
 exports.getFriends = function(user_id, callback) {
-    sql = 'select B.user_id,A.user_id as friend_id,user_name,tag,email_addr from AccountInfo as A join FriendInfo as B where B.user_id='
+    sql = 'select B.user_id,A.user_id as friend_id,user_name,tag,email_addr,photo,motto,age from AccountInfo as A join FriendInfo as B where B.user_id='
     sql += user_id;
     sql += ' and A.user_id=B.friend_id order by tag;';
-
+    console.log(sql);
     searchManager.query(sql, function(qerr, vals) {
         if (qerr) {
             callback(qerr);

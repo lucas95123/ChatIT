@@ -1,6 +1,7 @@
 var express = require('express')
 var accessManager = require('./accessManager');
 var friendManager = require('./friendManager');
+var searchManager = require('./searchManager');
 var router = express.Router();
 
 var renderFriendPage = function(req, res) {
@@ -106,10 +107,17 @@ router.get('/personalinfo', function(req, res) {
     if (req.session.username == undefined || req.session.username == null)
         res.redirect("/login");
     else
-        res.render('chatit_info', {
-            username: req.session.username,
-            userid: req.session.userid
-        });
+        searchManager.query('select photo from AccountInfo where user_id=' + req.session.userid, function(qerr, vals) {
+            if (vals[0].photo == null)
+                vals[0].photo = '/null.jpg';
+            else
+                vals[0].photo = vals[0].photo + ".png";
+            res.render('chatit_info', {
+                username: req.session.username,
+                userid: req.session.userid,
+                data: vals
+            });
+        })
 })
 
 router.post('/personalinfo', function(req, res) {
@@ -122,10 +130,7 @@ router.post('/personalinfo', function(req, res) {
                     error: err
                 });
             } else {
-                res.render('chatit_info', {
-                    username: req.session.username,
-                    userid: req.session.userid
-                });
+                res.redirect('/personalinfo');
             }
         })
     }
@@ -136,10 +141,7 @@ router.post('/uploadpic', function(req, res) {
         res.redirect("/login");
     else {
         accessManager.uploadpic(req, function() {
-            res.render('chatit_info', {
-                username: req.session.username,
-                userid: req.session.userid
-            });
+            res.redirect('/personalinfo');
         })
     }
 })

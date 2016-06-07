@@ -169,7 +169,7 @@ $("form").submit(function() {
                     .text(getNowFormatDate()))
                 .append($("<div></div>")
                     .attr("class", "reply-content pr text-right")
-                    .attr("style", "background-color: #1ABC9C;border-radius:13px")
+                    .attr("style", "background-color: #1ABC9C;border-radius:13px;max-width:656px;margin-left:80px")
                     .append($("<span></span>")
                         .attr("class", "arrow"))
                     .text($("#m").val()))));

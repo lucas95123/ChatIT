@@ -11,14 +11,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-2 col-lg-2 text-center">
-                            <img class="img-rounded" src="/image/c.jpg"></img>
-                            <form class="" action="index.html" method="post">
-                                <div class="form-group form-sm">
-                                    <HR>
-                                    <input id="fulAvatar" name="fulAvatar" type="file" class="form-control"/>
-                                    <hr>
-                                    <button type="submit" class="btn btn-primary btn-md">上传图片</button>
-                                </div>
+                            <img class="img-rounded" src=<%-data[0].photo%>></img>
+                            <form class="form-signin" action="/uploadpic" role="form" method="post" enctype='multipart/form-data'>
+                                <hr>
+                                <input id="fulAvatar" name="fulAvatar" type="file" class="form-control"/>
+                                <hr>
+                                <button id="btnSub" class="btn btn-md btn-primary" type="submit">上 传</button>
                             </form>
                         </div>
                         <div class="col-md-8 col-lg-8">
