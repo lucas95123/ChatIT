@@ -167,7 +167,7 @@ router.get('/logout', function(req, res, next) {
     res.clearCookie('msgqueue');
     req.session.username = undefined;
     req.session.passwd = undefined;
-    res.render('chatit_mobile_login');
+    res.render('chatit_login');
 })
 
 /*AJAX APIS
