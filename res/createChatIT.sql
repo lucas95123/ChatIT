@@ -8,7 +8,8 @@ create table AccountInfo(
   photo varchar(50),
   motto varchar(50),
   age smallint,
-  unique (user_name)
+  unique (user_name),
+  unique (email_addr)
 ) DEFAULT CHARSET=utf8;
 
 create table FriendInfo(

@@ -31,7 +31,8 @@ CREATE TABLE `AccountInfo` (
   `motto` varchar(50) DEFAULT NULL,
   `age` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_name` (`user_name`)
+  UNIQUE KEY `user_name` (`user_name`),
+  UNIQUE KEY `email_addr` (`email_addr`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
