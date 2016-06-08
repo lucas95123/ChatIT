@@ -25,7 +25,7 @@ io.on('connection', function(socket) {
             console.log("friend not online");
             offlineManager.insertOfflineMsg(mesg.uid, mesg.fid, unescape(mesg.msg));
         } else {
-            socketMap[mesg.fid].emit('chatmessage', unescape(mesg.msg), mesg.uid);
+            socketMap[mesg.fid].emit('chatmessage', mesg.msg, mesg.uid);
         }
     });
 
