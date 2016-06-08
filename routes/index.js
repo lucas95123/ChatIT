@@ -43,7 +43,7 @@ var login = function(req, res) {
         req.session.userid = req.cookies['userinfo'].user_id;
         renderFriendPage(req, res);
     } else
-        res.render('chatit_mobile_login');
+        res.render('chatit_login');
 }
 
 router.post('/book', function(req, res){
@@ -98,13 +98,13 @@ router.post('/signup', function(req, res) {
                 error: err
             });
         } else {
-            res.render('chatit_mobile_login');
+            res.render('chatit_login');
         }
     })
 })
 
 router.get('/signup', function(req, res, next) {
-    res.render('chatit_mobile_signup');
+    res.render('chatit_signup');
 })
 
 router.get('/chat', function(req, res, next) {
