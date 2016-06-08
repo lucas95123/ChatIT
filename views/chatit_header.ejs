@@ -1,90 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <title>有聊-基于Web的即时通讯系统</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="utf-8">
+        <title>有聊-基于Web的即时通讯系统</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta id="userid" , name="userid" , content=<%- "'"+userid+ "'"%>>
-    <!-- Loading Bootstrap -->
-    <link href="/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <meta id="userid" , name="userid" , content=<%- "'"+userid+ "'"%>>
+        <!-- Loading Bootstrap -->
+        <link href="/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Loading Flat UI -->
-    <link href="/css/flat-ui.css" rel="stylesheet">
+        <!-- Loading Flat UI -->
+        <link href="/css/flat-ui.css" rel="stylesheet">
 
-    <!-- Loading Chat Box UI -->
-    <link href="/css/chat_box.css" rel="stylesheet">
+        <!-- Loading Chat Box UI -->
+        <link href="/css/chat_box.css" rel="stylesheet">
 
+        <link rel="shortcut icon" href="/image/favicon.ico">
 
-    <link rel="shortcut icon" href="/image/favicon.ico">
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+        <!--[if lt IE 9]> <script src="../../dist/js/vendor/html5shiv.js"></script> <script src="../../dist/js/vendor/respond.min.js"></script> <![endif]-->
+    </head>
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-    <!--[if lt IE 9]>
-      <script src="../../dist/js/vendor/html5shiv.js"></script>
-      <script src="../../dist/js/vendor/respond.min.js"></script>
-    <![endif]-->
-</head>
+    <body>
+        <style>
+            body {
+                min-height: 800px;
+                padding-top: 50px;
+                background-image: url('/image/blur.jpg');
+            }
+            .panel-default {
+                background-color: rgba(0,0,0,.075);
+                border-color: rgba(255,255,255,.15);
+            }
+            .panel-footer {
+                border-top: 0;
+                background-color: #34495E;
+            }
+            .panel-heading {
+                border-bottom: 0;
+                background-color: #34495E;
+            }
+            .list-group-item {
+                border: 0 rgba(255,255,255,.15);
+            }
+        </style>
 
-<body>
-    <style>
-        body {
-            min-height: 800px;
-            padding-top: 50px;
-        }
-    </style>
+        <!-- Static navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top navbar-sm" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="/">有聊</a>
+            </div>
 
-    <!-- Static navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top navbar-sm" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-            </button>
-            <a class="navbar-brand" href="/">有聊</a>
-        </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a id="chatbutton" href="/chat">消息<span class="navbar-unread">1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/friends">好友</a>
+                    </li>
+                </ul>
+                <%# <form class="navbar-form navbar-left" action="#" role="search"> <div class="form-group"> <div class="input-group"> <input class="form-control" id="na-leftarInput-01" type="search" placeholder="Search"> <span class="input-group-btn"> <button
+                type="submit" class="btn"><span class="fui-search"></span></button> </span> </div> </div> </form>%>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="/personalinfo" class="dropdown-toggle" data-toggle="dropdown">
+                            <%-username%>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/personalinfo">个人信息</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="/logout">切换账号</a>
+                            </li>
+                            <li>
+                                <a href="/logout">退出登录</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a id="chatbutton" href="/chat">消息<span class="navbar-unread">1</span></a></li>
-                <li><a href="/friends">好友</a></li>
-            </ul>
-            <%# <form class="navbar-form navbar-left" action="#" role="search">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input class="form-control" id="na-leftarInput-01" type="search" placeholder="Search">
-                        <span class="input-group-btn">
-                  <button type="submit" class="btn"><span class="fui-search"></span></button>
-                        </span>
-                    </div>
-                </div>
-            </form>%>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="/personalinfo" class="dropdown-toggle" data-toggle="dropdown">
-                        <%-username%><b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/personalinfo">个人信息</a></li>
-                        <li class="divider"></li>
-                        <li><a href="/logout">切换账号</a></li>
-                        <li><a href="/logout">退出登录</a></li>
-                    </ul>
-                </li>
-                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </nav>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="javascripts/vendor/jquery.min.js"></script>
+        <!-- jQuery.Cookie (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="javascripts/vendor/jquery.cookie.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="javascripts/flat-ui.min.js"></script>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="javascripts/vendor/jquery.min.js"></script>
-    <!-- jQuery.Cookie (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="javascripts/vendor/jquery.cookie.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="javascripts/flat-ui.min.js"></script>
-
-    <script src="javascripts/application.js"></script>
-</body>
+        <script src="javascripts/application.js"></script>
+    </body>
 
 </html>

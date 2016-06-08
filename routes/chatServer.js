@@ -45,7 +45,7 @@ io.on('connection', function(socket) {
                 console.log(uid+":sending offline messages");
                 for (var i = 0; i < vals.length; i++) {
                     console.log(vals[i].message);
-                    socket.emit('chatmessage', vals[i].message, vals[i].user_id, vals[i].time_stamp)
+                    socket.emit('chatmessage', vals[i].message, vals[i].user_id, escape(vals[i].time_stamp))
                 }
                 offlineManager.deleteOfflineMsg(uid);
             }

@@ -201,6 +201,18 @@ router.get('/getFriendID', function(req, res) {
     });
 })
 
+router.get('/getAllFriendID', function(req, res) {
+  friendManager.getAllFriendID(req.query.uid, function(err, vals) {
+    if (err) {
+        res.render('error', {
+            error: err
+        });
+    } else {
+        res.json(vals);
+    }
+  })
+})
+
 router.get('/getPersonalInfo', function(req, res) {
     accessManager.getinfo(req.query.uid, function(err, vals) {
         if (err) {

@@ -1,10 +1,9 @@
-var userinfostr = $.cookie('userinfo').substring(2, $.cookie('userinfo').length)
-var userinfo = eval('(' + userinfostr + ')');
 var socket = io();
 var uid = $("#userid").attr("content");
 var fname = $("#friendname").attr("content");
 var fid = $("#friendsid").attr("content");
 var msgqueue = loadMsgQuene();
+var idqueue = loadFriendID();
 
 function loadMsgQuene() {
     var msgque;
@@ -15,6 +14,22 @@ function loadMsgQuene() {
         msgque = JSON.parse(msgquestr);
     }
     return msgque;
+}
+
+function loadFriendID() {
+    var xmlhttp;
+    if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else { // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.open("GET", "/getAllFriendID?uid=" + uid, false);
+    xmlhttp.send();
+    var vals = eval('(' + xmlhttp.responseText + ')');
+    var idque = new Map();
+    for (var i = 0; i < vals.length; i++)
+        idque[vals[i].user_name] = vals[i].friend_id;
+    return idque;
 }
 
 function saveMsgQueue() {
@@ -40,7 +55,7 @@ function renderFriendbox() {
     for (friend in usermsg) {
         if (flagfirst == 0 && fname == 'undefined') {
             fname = friend;
-            fid = msgqueue[uid][friend][0].f_id;
+            fid = idqueue[fname];
             flagfirst = 1;
         }
         $("#friendbox").prepend($("<li></li>")
@@ -48,7 +63,7 @@ function renderFriendbox() {
                 .append($("<table></table>").attr("cellpadding", "4")
                     .append($("<tr></tr>")
                         .append($("<td></td>")
-                            .append($("<img></img>").attr("src", "image/a.jpg").attr("width", "60").attr("class", "img-circle")))
+                            .append($("<img></img>").attr("src", "avatar/" + idqueue[friend] + "_small.png").attr("width", "60").attr("class", "img-circle")))
                         .append($("<td></td>")
                             .append($("<b>&nbsp;&nbsp;" + friend + "&nbsp;&nbsp;</b>").attr("style", "color:#34495E"))
                             .append($("<span id=unreadbadge_" + friend + " class=\"badge\"></span>"))
@@ -73,7 +88,7 @@ function renderMsgBox() {
                     .attr("class", "user")
                     .append($("<img></img>")
                         .attr("class", "img-responsive avatar_")
-                        .attr("src", "image/a.jpg")))
+                        .attr("src", "avatar/" + uid + "_small.png")))
                 .append($("<div></div>")
                     .attr("class", "reply-content-box")
                     .append($("<span></span>")
@@ -92,7 +107,7 @@ function renderMsgBox() {
                     .attr("class", "user")
                     .append($("<img></img>")
                         .attr("class", "img-responsive avatar_")
-                        .attr("src", "image/a.jpg")))
+                        .attr("src", "avatar/" + idqueue[fname] + "_small.png")))
                 .append($("<div></div>")
                     .attr("class", "reply-content-box")
                     .append($("<span></span>")
@@ -162,7 +177,7 @@ $("form").submit(function() {
                 .attr("class", "user")
                 .append($("<img></img>")
                     .attr("class", "img-responsive avatar_")
-                    .attr("src", "image/a.jpg")))
+                    .attr("src", "avatar/" + uid + "_small.png")))
             .append($("<div></div>")
                 .attr("class", "reply-content-box")
                 .append($("<span></span>")
@@ -234,7 +249,7 @@ socket.on("chatmessage", function(message, fid, timestamp) {
     if (timestamp == undefined)
         msg.timestamp = getNowFormatDate();
     else
-        msg.timestamp = timestamp;
+        msg.timestamp = unescape(timestamp);
     msg.role = 0;
     msg.f_id = parseInt(fid);
 
