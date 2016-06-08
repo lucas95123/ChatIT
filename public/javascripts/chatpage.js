@@ -175,7 +175,6 @@ $("form").submit(function() {
                     .text($("#m").val()))));
         sendIdentification(uid);
         socket.emit("chatmessage", "{\"msg\":\"" + escape($("#m").val()) + "\", \"uid\":" + uid + ", \"fid\":" + fid + "}");
-        socket.emit("debugmessage", escape($("#m").val()));
         msg = new Object();
         msg.msgtext = $("#m").val();
         msg.timestamp = getNowFormatDate();
@@ -230,7 +229,7 @@ function getFriendName(f_id, msg, callback) {
 
 socket.on("chatmessage", function(message, fid, timestamp) {
     msg = new Object();
-    msg.msgtext = message;
+    msg.msgtext = unescape(message);
     if (timestamp == undefined)
         msg.timestamp = getNowFormatDate();
     else
