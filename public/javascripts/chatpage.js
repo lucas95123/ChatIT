@@ -28,6 +28,7 @@ function handleClick(arg) {
     getFriendID(fname, function(id) {
         fid = id;
         $('#messageboxname').text(fname);
+        $("#unreadbadge" + fid).text("");
         renderMsgBox();
         scroll2bottom();
     })
@@ -50,7 +51,7 @@ function renderFriendbox() {
                             .append($("<img></img>").attr("src", "image/a.jpg").attr("width", "60").attr("class", "img-circle")))
                         .append($("<td></td>")
                             .append($("<b>&nbsp;&nbsp;" + friend + "&nbsp;&nbsp;</b>").attr("style", "color:#34495E"))
-                            .append($("<span id=unreadbadge"+fid+" class=\"badge\">4</span>"))
+                            .append($("<span id=unreadbadge" + fid + " class=\"badge\"></span>"))
                         )
                     )
                 )
@@ -238,15 +239,14 @@ socket.on("chatmessage", function(message, fid, timestamp) {
     msg.f_id = parseInt(fid);
 
     getFriendName(fid, msg, function(friendname, msg) {
-        if(friendname!=fname)
-        {
-          var count=$("#unreadbadge"+fid).text();
-          if(count=="")
-            count=0;
-          else
-            count=parseInt(count);
-          count+=1;
-          $("#unreadbadge"+fid).text(count);
+        if (friendname != fname) {
+            var count = $("#unreadbadge" + fid).text();
+            if (count == "")
+                count = 0;
+            else
+                count = parseInt(count);
+            count += 1;
+            $("#unreadbadge" + fid).text(count);
         }
         if (msgqueue[uid][friendname] != undefined)
             msgqueue[uid][friendname].push(msg);

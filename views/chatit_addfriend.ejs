@@ -30,7 +30,7 @@
                                         <li>
                                             <table cellpadding="4">
                                                 <tr>
-                                                    <td><img src="/image/3.png" width="60" class="img-circle" /></td>
+                                                    <td><img src=<%-user[i]['photo']+".png"%> width="60" class="img-circle" /></td>
                                                     <td><b>&nbsp;&nbsp;<%-user[i]['user_name']%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
                                                     <td>
                                                         <a href=<%-"'./addfriends?"+"user_id="+user[i]['user_id']+"'"%> ><button class="btn btn-primary btn-sm">添加</button></a>

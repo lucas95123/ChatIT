@@ -36,7 +36,7 @@ exports.addFriends = function(user_id, friend_id, callback) {
 }
 
 exports.searchFriends = function(user_name, callback) {
-    sql = 'select user_id,user_name from AccountInfo where user_name like ';
+    sql = 'select user_id,user_name,photo from AccountInfo where user_name like ';
     sql += '\'%' + user_name.trim() + '%\';';
     console.log(sql);
     searchManager.query(sql, function(qerr, vals) {
@@ -58,9 +58,19 @@ exports.deleteFriends = function(user_id, friend_id, callback) {
         if (qerr) {
             callback(qerr);
             return;
-        } else {
-            callback(qerr, vals);
         }
+        sql = 'delete from FriendInfo where user_id=';
+        sql += friend_id + ' and friend_id=';
+        sql += user_id + ';';
+        console.log(sql);
+        searchManager.query(sql, function(qerr, vals) {
+            if (qerr) {
+                callback(qerr);
+                return;
+            } else {
+                callback(qerr, vals);
+            }
+        })
     })
 }
 
@@ -93,7 +103,7 @@ exports.findNameByID = function(fid, callback) {
 }
 
 exports.findIDByName = function(fname, callback) {
-    sql = "select user_id from AccountInfo where user_name=" + "\'"+fname+"\'";
+    sql = "select user_id from AccountInfo where user_name=" + "\'" + fname + "\'";
     console.log(sql);
     searchManager.query(sql, function(qerr, vals) {
         if (qerr) {
