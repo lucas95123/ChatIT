@@ -1,6 +1,7 @@
 # ChatIT
 This is an online chatting system based on node.js under the framework of express
 The function include
+
 1. instant chatting with friends and supports offline message
 2. friend management add, delete, and group friends
 3. Personal Infomation modification
@@ -13,11 +14,11 @@ The function include
 
 #Usage
 ##prequisit
-`nodejs`
-`imageMagick`
-`npm`
-These are the depending packages that you need to install yourself
-for other node_modules just clone the project and type `npm install` in the root directory of the project
+`nodejs`<br>
+`imageMagick`<br>
+`npm`<br>
+These are the depending packages that you need to install yourself<br>
+For other node_modules just clone the project and type `npm install` in the root directory of the project
 
 ##Start the application
 `DEBUG=myapp npm start` or `supervisor bin/www` if you have supervisor installed or `forever start bin/www`if you have forever installed and want the app to run forever in backstage
