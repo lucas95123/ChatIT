@@ -36,7 +36,7 @@ exports.addFriends = function(user_id, friend_id, callback) {
 }
 
 exports.searchFriends = function(user_name, callback) {
-    sql = 'select user_id,user_name from AccountInfo where user_name like ';
+    sql = 'select user_id,user_name,photo from AccountInfo where user_name like ';
     sql += '\'%' + user_name.trim() + '%\';';
     console.log(sql);
     searchManager.query(sql, function(qerr, vals) {
