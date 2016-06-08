@@ -27,7 +27,6 @@
                                 <% for(var i=0;i<friends.length;i++) {%>
                                     <div class="accordion-group">
                                         <div class="accordion-heading">
-                                            <HR>
                                             <a class="accordion-toggle" data-toggle="collapse" data-parent=<%- "#accordion-heading-"+i %> href=<%- "#accordion-element-"+i %>>
                                                 <b>&nbsp;&nbsp;&nbsp;&nbsp;<%-friends[i][0].tag+" "+friends[i].length+"位好友"%></b>
                                             </a>
@@ -36,7 +35,7 @@
                                             <div class="list-group">
                                                 <%for(var j=0;j<friends[i].length;j++) {%>
                                                     <%count+=1;%>
-                                                    <a id=<%- "'modal-"+i+ ""+j+ "'"%> href=<%-"'#modal-container-"+i+""+j+"'"%> class="list-group-item" data-toggle="modal" data-target=<%- "'#friendinfo-"+i+ ""+j+ "'"%>>
+                                                    <a style="border-top-left-radius: 0px;border-top-right-radius: 0px;background-color: rgba(0,0,0,.075);" id=<%- "'modal-"+i+ ""+j+ "'"%> href=<%-"'#modal-container-"+i+""+j+"'"%> class="list-group-item" data-toggle="modal" data-target=<%- "'#friendinfo-"+i+ ""+j+ "'"%>>
                                                         <div class="row">
                                                             <div class="col-md-1 col-sm-2 col-xs-3">
                                                                 <img src=<%- "'"+friends[i][j].photo+"_small.png'" %> alt="140*140" class="img-rounded">

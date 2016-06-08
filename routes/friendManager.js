@@ -114,3 +114,18 @@ exports.findIDByName = function(fname, callback) {
         }
     })
 }
+
+exports.getAllFriendID = function(uid, callback) {
+  sql = 'select A.user_id as friend_id,user_name from AccountInfo as A join FriendInfo as B where B.user_id='
+  sql += uid;
+  sql += ' and A.user_id=B.friend_id;';
+  console.log(sql);
+  searchManager.query(sql, function(qerr, vals) {
+      if (qerr) {
+          callback(qerr);
+          return;
+      } else {
+          callback(qerr, vals);
+      }
+  })
+}
