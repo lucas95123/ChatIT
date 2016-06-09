@@ -43,11 +43,27 @@ var login = function(req, res) {
         req.session.userid = req.cookies['userinfo'].user_id;
         renderFriendPage(req, res);
     } else
-        res.render('chatit_login');
+        res.render('chatit_mobile_login');
 }
+
+router.post('/book', function(req, res){
+   console.log("post received");
+	console.log(req.body);
+})
+
+router.get('/book', function(req, res){
+    console.log("get reveived");
+    console.log(req.body);
+})
 
 /* GET home page. */
 router.get('/', login);
+
+router.post('/testEmbed', function(req, res){
+	console.log("================");
+	console.log(req.body);
+	res.render('chatit_mobile_signup');
+}) 
 
 router.get('/login', login)
 
@@ -82,13 +98,13 @@ router.post('/signup', function(req, res) {
                 error: err
             });
         } else {
-            res.render('chatit_login');
+            res.render('chatit_mobile_login');
         }
     })
 })
 
 router.get('/signup', function(req, res, next) {
-    res.render('chatit_signup');
+    res.render('chatit_mobile_signup');
 })
 
 router.get('/chat', function(req, res, next) {
@@ -151,7 +167,7 @@ router.get('/logout', function(req, res, next) {
     res.clearCookie('msgqueue');
     req.session.username = undefined;
     req.session.passwd = undefined;
-    res.render('chatit_login');
+    res.render('chatit_mobile_login');
 })
 
 /*AJAX APIS
