@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/
-cordova/
+ChatIT/
 searchManager.js
+.gitignore
